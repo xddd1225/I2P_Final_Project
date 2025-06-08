@@ -23,9 +23,11 @@ public:
     Group* GroundGroup;
     Group* WallGroup;
     Group* TankGroup;
+    Group* BulletGroup;
 
     std::vector<std::vector<int>> mapState;
     Tank* playerTank;
+    Tank* AITank;
 
     explicit PlayScene() = default;
     void Initialize() override;
@@ -35,6 +37,8 @@ public:
     void OnKeyDown(int keyCode) override;
     void OnKeyUp(int keyCode) override;
     void GenerateMaze();
+    void OnMouseDown(int button, int mx, int my) override;
 };
 
 #endif   // PLAYSCENE_HPP
+

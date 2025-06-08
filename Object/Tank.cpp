@@ -2,13 +2,21 @@
 #include <cmath>
 #include "Tank.hpp"
 #include "Engine/Collider.hpp"
+#include "Engine/GameEngine.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Bullet.hpp"
+#include <iostream>
+
+PlayScene *Tank::getPlayScene() {
+    return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
+}
 
 Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
     : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
     Speed = 100;
     Size.x = 64;
     Size.y = 64;
+    life = 3;
     Velocity = Engine::Point(0, 0);
 }
 
@@ -18,6 +26,11 @@ void Tank::Update(float deltaTime) {
 
     if (!CheckCollision(nextPos)) {
         Position = nextPos;
+    }
+
+    // Update shoot cooldown
+    if (shootCooldown > 0) {
+        shootCooldown -= deltaTime;
     }
 }
 
@@ -45,7 +58,9 @@ bool Tank::CheckCollision(Engine::Point nextPos) {
 
     return false;
 }
+
 void Tank::OnKeyDown(int keyCode) {
+    pressedKey[keyCode] = true;
     switch (keyCode) {
     case ALLEGRO_KEY_W:
         Velocity.y = -1;
@@ -60,22 +75,59 @@ void Tank::OnKeyDown(int keyCode) {
         Velocity.x = 1;
         break;
     }
-
+    if (Velocity.x!=0&&Velocity.y!=0){
+        Velocity.x = (Velocity.x>0?1:-1)*sqrt(2)/2;
+        Velocity.y = (Velocity.y>0?1:-1)*sqrt(2)/2;
+    }
     if (Velocity.x != 0 || Velocity.y != 0) {
         Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
     }
 }
 
 void Tank::OnKeyUp(int keyCode) {
+    pressedKey[keyCode] = false;
     switch (keyCode) {
-    case ALLEGRO_KEY_W:
-    case ALLEGRO_KEY_S:
+    case ALLEGRO_KEY_W: {
         Velocity.y = 0;
+        if (pressedKey[ALLEGRO_KEY_S])
+            Velocity.y=1;
         break;
-    case ALLEGRO_KEY_A:
-    case ALLEGRO_KEY_D:
-        Velocity.x = 0;
+        }
+    case ALLEGRO_KEY_S:{
+        Velocity.y = 0;
+        if (pressedKey[ALLEGRO_KEY_W])
+            Velocity.y=-1;
         break;
     }
+    case ALLEGRO_KEY_A:{
+        Velocity.x = 0;
+        std::cout << pressedKey[ALLEGRO_KEY_D]  << std::endl;
+        if (pressedKey[ALLEGRO_KEY_D])
+            Velocity.x=1;
+        break;
+    }
+    case ALLEGRO_KEY_D:{
+        Velocity.x = 0;
+        if (pressedKey[ALLEGRO_KEY_A])
+            Velocity.x=-1;
+        break;
+    }
+    }
     Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
+}
+
+void Tank::hurt(int damage) {
+    life -= damage;
+    if (life <= 0){
+        getPlayScene()->RemoveObject(objectIterator);
+    }
+}
+
+void Tank::Shoot(float targetX, float targetY) {
+    if (shootCooldown <= 0) {
+        // Create a new bullet at the tank's position
+        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight);
+        getPlayScene()->BulletGroup->AddNewObject(bullet);
+        shootCooldown = SHOOT_COOLDOWN_TIME;
+    }
 }
