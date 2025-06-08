@@ -2,7 +2,13 @@
 #include <cmath>
 #include "Tank.hpp"
 #include "Engine/Collider.hpp"
+#include "Engine/GameEngine.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Bullet.hpp"
+
+PlayScene *Tank::getPlayScene() {
+    return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
+}
 
 Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
     : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
@@ -18,6 +24,11 @@ void Tank::Update(float deltaTime) {
 
     if (!CheckCollision(nextPos)) {
         Position = nextPos;
+    }
+
+    // Update shoot cooldown
+    if (shootCooldown > 0) {
+        shootCooldown -= deltaTime;
     }
 }
 
@@ -45,6 +56,7 @@ bool Tank::CheckCollision(Engine::Point nextPos) {
 
     return false;
 }
+
 void Tank::OnKeyDown(int keyCode) {
     switch (keyCode) {
     case ALLEGRO_KEY_W:
@@ -81,4 +93,13 @@ void Tank::OnKeyUp(int keyCode) {
         break;
     }
     Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
+}
+
+void Tank::Shoot(float targetX, float targetY) {
+    if (shootCooldown <= 0) {
+        // Create a new bullet at the tank's position
+        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight);
+        getPlayScene()->BulletGroup->AddNewObject(bullet);
+        shootCooldown = SHOOT_COOLDOWN_TIME;
+    }
 }

@@ -30,10 +30,12 @@ void PlayScene::Initialize() {
     GroundGroup = new Group();
     WallGroup = new Group();
     TankGroup = new Group();
+    BulletGroup = new Group();
 
     AddNewObject(GroundGroup);
     AddNewObject(WallGroup);
     AddNewObject(TankGroup);
+    AddNewObject(BulletGroup);
 
     for (int y = 0; y < MapHeight; ++y) {
         for (int x = 0; x < MapWidth; ++x) {
@@ -47,7 +49,9 @@ void PlayScene::Initialize() {
     }
 
     playerTank = new Tank(100, 100, &mapState, MapWidth, MapHeight);
+    AITank = new Tank(800, 300, &mapState, MapWidth, MapHeight);
     TankGroup->AddNewObject(playerTank);
+    TankGroup->AddNewObject(AITank);
 }
 
 void PlayScene::GenerateMaze() {
@@ -133,4 +137,11 @@ void PlayScene::OnKeyUp(int keyCode) {
     IScene::OnKeyUp(keyCode);
     if (playerTank)
         playerTank->OnKeyUp(keyCode);
+}
+
+void PlayScene::OnMouseDown(int button, int mx, int my) {
+    IScene::OnMouseDown(button, mx, my);
+    if (button == 1 && playerTank) { // Left mouse button
+        playerTank->Shoot(mx, my);
+    }
 }
