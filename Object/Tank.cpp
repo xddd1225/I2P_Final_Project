@@ -60,7 +60,10 @@ void Tank::OnKeyDown(int keyCode) {
         Velocity.x = 1;
         break;
     }
-
+    if (Velocity.x!=0&&Velocity.y!=0){
+        Velocity.x = (Velocity.x>0?1:-1)*sqrt(2)/2;
+        Velocity.y = (Velocity.y>0?1:-1)*sqrt(2)/2;
+    }
     if (Velocity.x != 0 || Velocity.y != 0) {
         Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
     }
