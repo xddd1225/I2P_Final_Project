@@ -49,7 +49,7 @@ void PlayScene::Initialize() {
     }
 
     playerTank = new Tank(100, 100, &mapState, MapWidth, MapHeight);
-    AITank = new Tank(800, 300, &mapState, MapWidth, MapHeight);
+    AITank = new Tank(100, 150, &mapState, MapWidth, MapHeight);
     TankGroup->AddNewObject(playerTank);
     TankGroup->AddNewObject(AITank);
 }

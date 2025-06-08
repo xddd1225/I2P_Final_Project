@@ -8,7 +8,7 @@ private:
     std::vector<std::vector<int>>* mapState;
     int mapWidth;
     int mapHeight;
-    int Speed=300;
+    int Speed;
     bool CheckCollision(Engine::Point nextPos);
     PlayScene *getPlayScene();
 

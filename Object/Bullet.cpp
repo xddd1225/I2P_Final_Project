@@ -4,6 +4,7 @@
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Scene/PlayScene.hpp"
+#include <iostream>
 
 PlayScene* Bullet::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -60,6 +61,13 @@ bool Bullet::CheckCollision(Engine::Point nextPos) {
             }
         }
     }
-
+    // Check tank collision
+    PlayScene* scene = getPlayScene();
+    Engine::Point target = scene->AITank->Position;
+    if (Engine::Collider::IsCircleOverlap(nextPos, 0, target, 24)) {
+        scene->AITank->hurt(1);
+        return true;
+    }
+    
     return false;
 }
