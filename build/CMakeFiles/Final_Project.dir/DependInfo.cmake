@@ -20,6 +20,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Engine/Point.cpp" "CMakeFiles/Final_Project.dir/Engine/Point.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Engine/Point.cpp.obj.d"
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Engine/Resources.cpp" "CMakeFiles/Final_Project.dir/Engine/Resources.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Engine/Resources.cpp.obj.d"
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Engine/Sprite.cpp" "CMakeFiles/Final_Project.dir/Engine/Sprite.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Engine/Sprite.cpp.obj.d"
+  "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/AITank.cpp" "CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj.d"
+  "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/Bullet.cpp" "CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj.d"
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/Tank.cpp" "CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj.d"
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Scene/PlayScene.cpp" "CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj.d"
   "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/UI/Component/Image.cpp" "CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj" "gcc" "CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj.d"

@@ -416,6 +416,54 @@ Engine/Sprite.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Engine/Sprite.cpp.s
 .PHONY : Engine/Sprite.cpp.s
 
+Object/AITank.obj: Object/AITank.cpp.obj
+.PHONY : Object/AITank.obj
+
+# target to build an object file
+Object/AITank.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj
+.PHONY : Object/AITank.cpp.obj
+
+Object/AITank.i: Object/AITank.cpp.i
+.PHONY : Object/AITank.i
+
+# target to preprocess a source file
+Object/AITank.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/AITank.cpp.i
+.PHONY : Object/AITank.cpp.i
+
+Object/AITank.s: Object/AITank.cpp.s
+.PHONY : Object/AITank.s
+
+# target to generate assembly for a file
+Object/AITank.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/AITank.cpp.s
+.PHONY : Object/AITank.cpp.s
+
+Object/Bullet.obj: Object/Bullet.cpp.obj
+.PHONY : Object/Bullet.obj
+
+# target to build an object file
+Object/Bullet.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj
+.PHONY : Object/Bullet.cpp.obj
+
+Object/Bullet.i: Object/Bullet.cpp.i
+.PHONY : Object/Bullet.i
+
+# target to preprocess a source file
+Object/Bullet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/Bullet.cpp.i
+.PHONY : Object/Bullet.cpp.i
+
+Object/Bullet.s: Object/Bullet.cpp.s
+.PHONY : Object/Bullet.s
+
+# target to generate assembly for a file
+Object/Bullet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Object/Bullet.cpp.s
+.PHONY : Object/Bullet.cpp.s
+
 Object/Tank.obj: Object/Tank.cpp.obj
 .PHONY : Object/Tank.obj
 
@@ -629,6 +677,12 @@ help:
 	@echo ... Engine/Sprite.obj
 	@echo ... Engine/Sprite.i
 	@echo ... Engine/Sprite.s
+	@echo ... Object/AITank.obj
+	@echo ... Object/AITank.i
+	@echo ... Object/AITank.s
+	@echo ... Object/Bullet.obj
+	@echo ... Object/Bullet.i
+	@echo ... Object/Bullet.s
 	@echo ... Object/Tank.obj
 	@echo ... Object/Tank.i
 	@echo ... Object/Tank.s

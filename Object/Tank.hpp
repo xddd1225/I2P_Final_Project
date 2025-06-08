@@ -7,6 +7,7 @@
 #include <map>
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
+#include <allegro5/allegro_primitives.h>
 // #include "Scene/PlayScene.hpp"
 class PlayScene; 
 class Tank : public Engine::Sprite {
@@ -28,9 +29,11 @@ private:
     float Speed;
     float shootCooldown = 0;
     int life;
+    int maxlife;
     const float SHOOT_COOLDOWN_TIME = 0.01f; // Time between shots in seconds
     
     bool CheckCollision(Engine::Point nextPos);
+    void Draw() const override;
 };
 
 #endif // TANK_HPP

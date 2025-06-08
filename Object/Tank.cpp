@@ -16,7 +16,7 @@ Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWid
     Speed = 100;
     Size.x = 64;
     Size.y = 64;
-    life = 3;
+    maxlife = life = 3;
     Velocity = Engine::Point(0, 0);
 }
 
@@ -32,6 +32,37 @@ void Tank::Update(float deltaTime) {
     if (shootCooldown > 0) {
         shootCooldown -= deltaTime;
     }
+}
+
+void Tank::Draw() const {
+    Sprite::Draw();
+
+    const float barWidth = 40;
+    const float barHeight = 6;
+    const float offsetY = -Size.y / 2 - 10;
+
+    float x = Position.x;
+    float y = Position.y + offsetY;
+
+    float ratio = std::max(0.0f, std::min(1.0f, static_cast<float>(life) / maxlife));
+
+    al_draw_filled_rectangle(
+        x - barWidth / 2, y,
+        x + barWidth / 2, y + barHeight,
+        al_map_rgb(100, 100, 100)
+    );
+
+    al_draw_filled_rectangle(
+        x - barWidth / 2, y,
+        x - barWidth / 2 + barWidth * ratio, y + barHeight,
+        al_map_rgb(255, 0, 0)
+    );
+
+    al_draw_rectangle(
+        x - barWidth / 2, y,
+        x + barWidth / 2, y + barHeight,
+        al_map_rgb(0, 0, 0), 1.0
+    );
 }
 
 bool Tank::CheckCollision(Engine::Point nextPos) {

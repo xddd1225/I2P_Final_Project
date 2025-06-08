@@ -263,11 +263,41 @@ CMakeFiles/Final_Project.dir/Object/Tank.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Final_Project.dir/Object/Tank.cpp.s"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\Tank.cpp -o CMakeFiles\Final_Project.dir\Object\Tank.cpp.s
 
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj: CMakeFiles/Final_Project.dir/flags.make
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/AITank.cpp
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj -MF CMakeFiles\Final_Project.dir\Object\AITank.cpp.obj.d -o CMakeFiles\Final_Project.dir\Object\AITank.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\AITank.cpp
+
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Final_Project.dir/Object/AITank.cpp.i"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\AITank.cpp > CMakeFiles\Final_Project.dir\Object\AITank.cpp.i
+
+CMakeFiles/Final_Project.dir/Object/AITank.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Final_Project.dir/Object/AITank.cpp.s"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\AITank.cpp -o CMakeFiles\Final_Project.dir\Object\AITank.cpp.s
+
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj: CMakeFiles/Final_Project.dir/flags.make
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/Bullet.cpp
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj -MF CMakeFiles\Final_Project.dir\Object\Bullet.cpp.obj.d -o CMakeFiles\Final_Project.dir\Object\Bullet.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\Bullet.cpp
+
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Final_Project.dir/Object/Bullet.cpp.i"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\Bullet.cpp > CMakeFiles\Final_Project.dir\Object\Bullet.cpp.i
+
+CMakeFiles/Final_Project.dir/Object/Bullet.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Final_Project.dir/Object/Bullet.cpp.s"
+	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Object\Bullet.cpp -o CMakeFiles\Final_Project.dir\Object\Bullet.cpp.s
+
 CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj: CMakeFiles/Final_Project.dir/flags.make
 CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Scene/PlayScene.cpp
 CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj -MF CMakeFiles\Final_Project.dir\Scene\PlayScene.cpp.obj.d -o CMakeFiles\Final_Project.dir\Scene\PlayScene.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\Scene\PlayScene.cpp
 
 CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.i: cmake_force
@@ -282,7 +312,7 @@ CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj: CMakeFiles/Final_Projec
 CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/UI/Component/Image.cpp
 CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj -MF CMakeFiles\Final_Project.dir\UI\Component\Image.cpp.obj.d -o CMakeFiles\Final_Project.dir\UI\Component\Image.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\UI\Component\Image.cpp
 
 CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.i: cmake_force
@@ -297,7 +327,7 @@ CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj: CMakeFiles/Final_
 CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/UI/Component/ImageButton.cpp
 CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj -MF CMakeFiles\Final_Project.dir\UI\Component\ImageButton.cpp.obj.d -o CMakeFiles\Final_Project.dir\UI\Component\ImageButton.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\UI\Component\ImageButton.cpp
 
 CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.i: cmake_force
@@ -312,7 +342,7 @@ CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj: CMakeFiles/Final_Projec
 CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/UI/Component/Label.cpp
 CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.obj -MF CMakeFiles\Final_Project.dir\UI\Component\Label.cpp.obj.d -o CMakeFiles\Final_Project.dir\UI\Component\Label.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\UI\Component\Label.cpp
 
 CMakeFiles/Final_Project.dir/UI/Component/Label.cpp.i: cmake_force
@@ -327,7 +357,7 @@ CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj: CMakeFiles/Final_Proje
 CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/UI/Component/Slider.cpp
 CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.obj -MF CMakeFiles\Final_Project.dir\UI\Component\Slider.cpp.obj.d -o CMakeFiles\Final_Project.dir\UI\Component\Slider.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\UI\Component\Slider.cpp
 
 CMakeFiles/Final_Project.dir/UI/Component/Slider.cpp.i: cmake_force
@@ -342,7 +372,7 @@ CMakeFiles/Final_Project.dir/main.cpp.obj: CMakeFiles/Final_Project.dir/flags.ma
 CMakeFiles/Final_Project.dir/main.cpp.obj: CMakeFiles/Final_Project.dir/includes_CXX.rsp
 CMakeFiles/Final_Project.dir/main.cpp.obj: C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/main.cpp
 CMakeFiles/Final_Project.dir/main.cpp.obj: CMakeFiles/Final_Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Final_Project.dir/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Final_Project.dir/main.cpp.obj"
 	c:\Users\yoyo2\Desktop\xdd\Programming2\mini2\llvm-mingw-20240417-msvcrt-x86_64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Final_Project.dir/main.cpp.obj -MF CMakeFiles\Final_Project.dir\main.cpp.obj.d -o CMakeFiles\Final_Project.dir\main.cpp.obj -c C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\main.cpp
 
 CMakeFiles/Final_Project.dir/main.cpp.i: cmake_force
@@ -368,6 +398,8 @@ Final_Project_OBJECTS = \
 "CMakeFiles/Final_Project.dir/Engine/Resources.cpp.obj" \
 "CMakeFiles/Final_Project.dir/Engine/Sprite.cpp.obj" \
 "CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj" \
+"CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj" \
+"CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj" \
 "CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj" \
 "CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj" \
 "CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj" \
@@ -391,6 +423,8 @@ Final_Project.exe: CMakeFiles/Final_Project.dir/Engine/Point.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/Engine/Resources.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/Engine/Sprite.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj
+Final_Project.exe: CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj
+Final_Project.exe: CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/UI/Component/Image.cpp.obj
 Final_Project.exe: CMakeFiles/Final_Project.dir/UI/Component/ImageButton.cpp.obj
@@ -401,7 +435,7 @@ Final_Project.exe: CMakeFiles/Final_Project.dir/build.make
 Final_Project.exe: CMakeFiles/Final_Project.dir/linkLibs.rsp
 Final_Project.exe: CMakeFiles/Final_Project.dir/objects1.rsp
 Final_Project.exe: CMakeFiles/Final_Project.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable Final_Project.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\yoyo2\Desktop\xdd\Programming2\Final\Final_Project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable Final_Project.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Final_Project.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
