@@ -79,6 +79,18 @@
 },
 {
   "directory": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/build",
+  "command": "c:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\mini2\\llvm-mingw-20240417-msvcrt-x86_64\\bin\\clang++.exe  @CMakeFiles/Final_Project.dir/includes_CXX.rsp -g -o CMakeFiles\\Final_Project.dir\\Object\\AITank.cpp.obj -c C:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\Final\\Final_Project\\Object\\AITank.cpp",
+  "file": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/AITank.cpp",
+  "output": "CMakeFiles/Final_Project.dir/Object/AITank.cpp.obj"
+},
+{
+  "directory": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/build",
+  "command": "c:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\mini2\\llvm-mingw-20240417-msvcrt-x86_64\\bin\\clang++.exe  @CMakeFiles/Final_Project.dir/includes_CXX.rsp -g -o CMakeFiles\\Final_Project.dir\\Object\\Bullet.cpp.obj -c C:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\Final\\Final_Project\\Object\\Bullet.cpp",
+  "file": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/Bullet.cpp",
+  "output": "CMakeFiles/Final_Project.dir/Object/Bullet.cpp.obj"
+},
+{
+  "directory": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/build",
   "command": "c:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\mini2\\llvm-mingw-20240417-msvcrt-x86_64\\bin\\clang++.exe  @CMakeFiles/Final_Project.dir/includes_CXX.rsp -g -o CMakeFiles\\Final_Project.dir\\Scene\\PlayScene.cpp.obj -c C:\\Users\\yoyo2\\Desktop\\xdd\\Programming2\\Final\\Final_Project\\Scene\\PlayScene.cpp",
   "file": "C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Scene/PlayScene.cpp",
   "output": "CMakeFiles/Final_Project.dir/Scene/PlayScene.cpp.obj"

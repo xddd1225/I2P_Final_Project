@@ -9,9 +9,11 @@
 [INFO] Loaded Resource<image>: Resource/images/play/tank.png
 [INFO] Game initialized
 [INFO] Game start event loop
+[INFO] Loaded Resource<image>: Resource/images/play/bullet-1.png
 [INFO] Game Terminating...
 [INFO] Game terminated
 [INFO] Game end
+[INFO] Destroyed Resource<image>: play/bullet-1.png
 [INFO] Destroyed Resource<image>: play/dirt.png
 [INFO] Destroyed Resource<image>: play/tank.png
 [INFO] Destroyed Resource<image>: play/floor.png

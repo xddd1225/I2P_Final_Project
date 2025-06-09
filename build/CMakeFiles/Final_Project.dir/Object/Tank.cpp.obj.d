@@ -821,11 +821,11 @@ CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj: \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/cstdarg \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__memory/temp_value.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__split_buffer \
-  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Point.hpp \
-  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Sprite.hpp \
-  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./UI/Component/Image.hpp \
-  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/IObject.hpp \
-  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/list \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/map \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/is_transparent.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__iterator/ranges_iterator_traits.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__node_handle \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__tree \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/functional \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/binary_negate.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/bind.h \
@@ -836,10 +836,7 @@ CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj: \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/binder2nd.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/boyer_moore_searcher.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/unordered_map \
-  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/is_transparent.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__hash_table \
-  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__iterator/ranges_iterator_traits.h \
-  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__node_handle \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/compose.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/default_searcher.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/function.h \
@@ -851,10 +848,46 @@ CMakeFiles/Final_Project.dir/Object/Tank.cpp.obj: \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/pointer_to_binary_function.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/pointer_to_unary_function.h \
   c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__functional/unary_negate.h \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Point.hpp \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Sprite.hpp \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./UI/Component/Image.hpp \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/IObject.hpp \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/list \
+  C:/allegro/include/allegro5/allegro_primitives.h \
   C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Collider.hpp \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/GameEngine.hpp \
   C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Scene/PlayScene.hpp \
   C:/allegro/include/allegro5/allegro_audio.h \
   C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/IScene.hpp \
   C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/Group.hpp \
   C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Engine/IControl.hpp \
-  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Object/Tank.hpp
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/./Object/Tank.hpp \
+  C:/Users/yoyo2/Desktop/xdd/Programming2/Final/Final_Project/Object/Bullet.hpp \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/iostream \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/istream \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/ostream \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/bitset \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/format \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/container_adaptor.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/range_default_formatter.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__chrono/statically_widen.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/range_formatter.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/format_context.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/format_arg_store.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/format_args.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__ranges/ref_view.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/queue \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/deque \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/stack \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/format_functions.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_char.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/write_escaped.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/escaped_output_table.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_floating_point.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__charconv/chars_format.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__charconv/to_chars_floating_point.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_integer.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_pointer.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_string.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/__format/formatter_tuple.h \
+  c:/Users/yoyo2/Desktop/xdd/Programming2/mini2/llvm-mingw-20240417-msvcrt-x86_64/include/c++/v1/print
