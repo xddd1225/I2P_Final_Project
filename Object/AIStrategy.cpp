@@ -4,11 +4,11 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include "Object/Bullet.hpp"
 
 // // const Engine::Point DirectionVectors[];
 // // const Engine::Point actionSet[];
 // using namespace std;
-
 
 State::State(PlayScene* scene) {
     mapState = scene->mapState;
@@ -17,6 +17,13 @@ State::State(PlayScene* scene) {
     BlockSize = scene->BlockSize;
     MapHeight = scene->MapHeight;
     MapWidth = scene->MapWidth;
+    bullets.clear();
+    for (auto& obj : scene->BulletGroup->GetObjects()) {
+        Bullet* b = dynamic_cast<Bullet*>(obj);
+        if (b) {
+            bullets.push_back(new Bullet(*b));  // 假設 Bullet 有正確的複製建構子
+        }
+    }
 }
 
 State::State(const State& state) {
@@ -26,6 +33,14 @@ State::State(const State& state) {
     BlockSize = state.BlockSize;
     MapHeight = state.MapHeight;
     MapWidth = state.MapWidth;
+    bullets.clear();
+    PlayScene* scene = ai->getPlayScene();
+    for (auto& obj : scene->BulletGroup->GetObjects()) {
+        Bullet* b = dynamic_cast<Bullet*>(obj);
+        if (b) {
+            bullets.push_back(new Bullet(*b));  // 假設 Bullet 有正確的複製建構子
+        }
+    }
 }
 
 // State::~State() {
@@ -49,13 +64,26 @@ void State::Simulate(float deltaTime){
     const float fixedStep = 0.01f;
     float elapsed = 0.0f;
     while (elapsed + fixedStep <= deltaTime) {
-        ai->Update(fixedStep);
+        ai->PropertyChange(fixedStep);
         elapsed += fixedStep;
     }
     // 最後補上不足的時間（如果有）
     if (elapsed < deltaTime) {
-        ai->Update(deltaTime - elapsed);
+        ai->PropertyChange(deltaTime - elapsed);
     }
+}
+
+float BulletThreatToPoint(Bullet* b, Engine::Point targetPos) {
+    if ((targetPos - b->Position).Dot(b->Velocity) < 0) return 0;
+    Point ap = targetPos - b->Position;
+    Point v = b->Velocity;
+    float cross = std::abs(ap.x * v.y - ap.y * v.x);
+    float dist = cross / v.Magnitude();
+    if (dist==0) dist = 1;
+    float absDist = (b->Position - targetPos).Magnitude();
+
+    // b-targetPos
+    return (1000-dist)*(1000-absDist)/1e4;
 }
 
 float State::EvaluateScore() const {
@@ -105,39 +133,51 @@ float State::EvaluateScore() const {
     }
 
     float bfs_dist = dist[goal.y][goal.x] != INT_MAX ? dist[goal.y][goal.x] : 1e9;
-    bfs_dist = abs(bfs_dist - 25);
+
+
+    float score = 0.0f;
+    for (Bullet* b : bullets) {
+        if (b->target == 0) {
+            score += BulletThreatToPoint(b, ai->Position);
+        }
+    }
+    std::cout << score << std::endl;
+    return score/10;
 }
 
 
 Action MonteCarloAI::DecideBestAction(const State& current) {
-    Point aiPos = current.ai->Position;
-    Point playerPos = current.player->Position;
-    Point best=Point(0,0);
     vector<Action> actions = GetAllActions();
-    float minDist = std::numeric_limits<float>::max();
-    for (const Action& act:actions){
-        State* tempState = new State(current);
-        tempState->ApplyAction(act);
-        tempState->Simulate(deltaTime);
-        float dist = tempState->EvaluateScore();
-        if (dist < minDist){
-            minDist = dist;
+    float minScore = std::numeric_limits<float>::max();
+    Point best = Point(0, 0);
+    for (const Action& act : actions) {
+        float score = SimulateRollout(current, act);
+        if (score < minScore) {
+            minScore = score;
             best = act.direction;
         }
     }
     return best;
 }
 
-// float MonteCarloAI::SimulateRollout(const State& initial, const Action& act) {
-//     State current = initial.Clone();
-//     current->ApplyAction(act);
-//     for (int i = 0; i < stepsPerRollout; ++i) {
-//         std::vector<Action> actions = GetAllActions();
-//         Action randomAct = actions[rand() % actions.size()];
-//         current->ApplyAction(randomAct);
-//     }
-//     return current->EvaluateScore();
-// }
+float MonteCarloAI::SimulateRollout(const State& initial, const Action& act) {
+    int rolloutCount = 1;
+    int rolloutSteps = 0;
+    float totalScore = 0.0f;
+    for (int i = 0; i < rolloutCount; ++i) {
+        State current(initial);
+        current.ApplyAction(act);
+        current.Simulate(deltaTime);
+        for (int j = 0; j < rolloutSteps; ++j) {
+            std::vector<Action> actions = GetAllActions();
+            Action randomAct = actions[rand() % actions.size()];
+            current.ApplyAction(randomAct);
+            current.Simulate(deltaTime);
+        }
+        totalScore += current.EvaluateScore();
+    }
+    return totalScore / rolloutCount;
+}
 std::vector<Action> MonteCarloAI::GetAllActions() {
     return AllActions;
 }

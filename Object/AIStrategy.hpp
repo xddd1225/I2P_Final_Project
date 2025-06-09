@@ -15,6 +15,7 @@
 // #include <cmath>
 #include "Object/AITank.hpp"
 #include "Object/Tank.hpp"
+#include "Object/Bullet.hpp"
 
 using namespace std;
 using Point = Engine::Point;
@@ -38,6 +39,7 @@ public:
 
 
     vector<vector<int>> mapState;
+    vector<Bullet*> bullets;
     AITank* ai;
     Tank* player;
     int score;

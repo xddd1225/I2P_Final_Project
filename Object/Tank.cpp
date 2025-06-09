@@ -12,8 +12,8 @@ PlayScene *Tank::getPlayScene() {
 }
 
 Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
-    : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
-    Speed = 100;
+    : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight){
+    Speed = 300;
     Size.x = 64;
     Size.y = 64;
     life = 3;
@@ -34,6 +34,7 @@ Tank::Tank(const Tank& other)
 }
 
 void Tank::Update(float deltaTime) {
+    Velocity = Velocity.Normalize();
     Engine::Point fullMove = Velocity * Speed * deltaTime;
     Engine::Point nextPos = Position + fullMove;
 
@@ -94,6 +95,8 @@ void Tank::OnKeyDown(int keyCode) {
     case ALLEGRO_KEY_D:
         Velocity.x = 1;
         break;
+    case ALLEGRO_KEY_SPACE:
+        break;
     }
     if (Velocity.x!=0&&Velocity.y!=0){
         Velocity.x = (Velocity.x>0?1:-1)*sqrt(2)/2;
@@ -146,7 +149,7 @@ void Tank::hurt(int damage) {
 void Tank::Shoot(float targetX, float targetY) {
     if (shootCooldown <= 0) {
         // Create a new bullet at the tank's position
-        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight);
+        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight, 0);
         getPlayScene()->BulletGroup->AddNewObject(bullet);
         shootCooldown = SHOOT_COOLDOWN_TIME;
     }

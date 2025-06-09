@@ -49,9 +49,9 @@ void PlayScene::Initialize() {
     }
 
     playerTank = new Tank(100, 100, &mapState, MapWidth, MapHeight);
-    AITank = new Tank(100, 150, &mapState, MapWidth, MapHeight);
+    aiTank = new AITank(620, 540, &mapState, MapWidth, MapHeight);
     TankGroup->AddNewObject(playerTank);
-    TankGroup->AddNewObject(AITank);
+    TankGroup->AddNewObject(aiTank);
 }
 
 void PlayScene::GenerateMaze() {
@@ -113,6 +113,7 @@ void PlayScene::GenerateMaze() {
         for (int x = 0; x < MapWidth; ++x)
             if (mapState[y][x] == -1)
                 mapState[y][x] = TILE_WALL;
+    mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
 }
 
 void PlayScene::Terminate() {
@@ -120,6 +121,7 @@ void PlayScene::Terminate() {
 }
 
 void PlayScene::Update(float deltaTime) {
+    aiTank->Strategy();
     IScene::Update(deltaTime);
 }
 

@@ -10,9 +10,9 @@ PlayScene* Bullet::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
 
-Bullet::Bullet(float x, float y, float targetX, float targetY, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
-    : Sprite("play/bullet-1.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
-    Speed = 300;
+Bullet::Bullet(float x, float y, float targetX, float targetY, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight, int target)
+    : Sprite("play/bullet-1.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight), target(target) {
+    Speed = 600;
     Size.x = 64;
     Size.y = 64;
     
@@ -63,9 +63,14 @@ bool Bullet::CheckCollision(Engine::Point nextPos) {
     }
     // Check tank collision
     PlayScene* scene = getPlayScene();
-    Engine::Point target = scene->aiTank->Position;
-    if (Engine::Collider::IsCircleOverlap(nextPos, 0, target, 24)) {
+    Engine::Point aitarget = scene->aiTank->Position;
+    Engine::Point playertarget = scene->playerTank->Position;
+    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
         scene->aiTank->hurt(1);
+        return true;
+    }
+    if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+        scene->playerTank->hurt(1);
         return true;
     }
     

@@ -12,12 +12,13 @@ PlayScene *AITank::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
 }
 
+
 AITank::AITank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
     : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
-    Speed = 100;
+    Speed = 300;
     Size.x = 64;
     Size.y = 64;
-    life = 3;
+    life = 300;
     Velocity = Engine::Point(0, 0);
 }
 
@@ -36,18 +37,26 @@ AITank::AITank(const AITank& other)
 
 void AITank::ApplyAction(const Action& act){
     Velocity = act.direction.Normalize();
-    // Velocity = Point(1,0);
 }
 
 void AITank::Strategy() {
     // Position.x
     State snapshot = State(getPlayScene());
-    MonteCarloAI ai(15, 1.0f, 30);
+    MonteCarloAI ai(15, 0.5f, 30);
     Action best = ai.DecideBestAction(snapshot);
     ApplyAction(best);
 }
 
 void AITank::Update(float deltaTime) {
+    PropertyChange(deltaTime);
+    PlayScene* scene = getPlayScene();
+    int targetX = scene->playerTank->Position.x;
+    int targetY = scene->playerTank->Position.y;
+    Shoot(targetX, targetY);
+}
+
+void AITank::PropertyChange(float deltaTime){
+    Velocity = Velocity.Normalize();
     Engine::Point fullMove = Velocity * Speed * deltaTime;
     Engine::Point nextPos = Position + fullMove;
 
@@ -103,7 +112,7 @@ void AITank::hurt(int damage) {
 void AITank::Shoot(float targetX, float targetY) {
     if (shootCooldown <= 0) {
         // Create a new bullet at the tank's position
-        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight);
+        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight, 1);
         getPlayScene()->BulletGroup->AddNewObject(bullet);
         shootCooldown = SHOOT_COOLDOWN_TIME;
     }
