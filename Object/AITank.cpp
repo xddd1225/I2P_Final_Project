@@ -104,7 +104,7 @@ bool AITank::CheckCollision(Engine::Point nextPos) {
 
 void AITank::Draw() const {
     Sprite::Draw();
-    std::cout << life << " " << maxlife << std::endl;
+    // std::cout << life << " " << maxlife << std::endl;
     const float barWidth = 40;
     const float barHeight = 6;
     const float offsetY = -Size.y / 2 - 10;
