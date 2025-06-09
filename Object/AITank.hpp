@@ -7,18 +7,26 @@
 #include <map>
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
-#include "Scene/PlayScene.hpp"
+#include "Object/Action.hpp"
+#include "Object/AITank.hpp"
 
+// Forward declarations
+class PlayScene;
 
 class AITank : public Engine::Sprite {
 public:
     explicit AITank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
+    AITank(const AITank& tank);
     void Update(float deltaTime) override;
     void Shoot(float targetX, float targetY);
     void hurt(int damage);
+    void setVelocity(Engine::Point point);
+    void ApplyAction(const Action& act);
+    void Strategy();
     PlayScene* getPlayScene();
 
-private:
+// private:
+    friend class AIstrategy;
     std::vector<std::vector<int>>* mapState;
     std::map<int, bool> pressedKey;
     int mapWidth, mapHeight;
@@ -30,6 +38,7 @@ private:
     
     bool CheckCollision(Engine::Point nextPos);
     void extractState(PlayScene* scene);
+    // void ApplyAction(Action& act);
 };
 
 #endif // AITANK_HPP

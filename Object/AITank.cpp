@@ -1,9 +1,10 @@
 #include <allegro5/allegro.h>
 #include <cmath>
-#include "AITank.hpp"
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
+#include "AIStrategy.hpp"
 #include "Scene/PlayScene.hpp"
+#include "Object/AITank.hpp"
 #include "Bullet.hpp"
 #include <iostream>
 
@@ -20,15 +21,48 @@ AITank::AITank(float x, float y, std::vector<std::vector<int>>* mapState, int ma
     Velocity = Engine::Point(0, 0);
 }
 
+AITank::AITank(const AITank& other) 
+    : Engine::Sprite(other) // 如果 Sprite 有複製建構子，建議初始化列表帶入
+{
+    mapState = other.mapState;
+    mapWidth = other.mapWidth;
+    mapHeight = other.mapHeight;
+    Speed = other.Speed;
+    Size = other.Size;
+    life = other.life;
+    Velocity = other.Velocity;
+    shootCooldown = other.shootCooldown;
+}
+
+void AITank::ApplyAction(const Action& act){
+    Velocity = act.direction.Normalize();
+    // Velocity = Point(1,0);
+}
+
+void AITank::Strategy() {
+    // Position.x
+    State snapshot = State(getPlayScene());
+    MonteCarloAI ai(15, 1.0f, 30);
+    Action best = ai.DecideBestAction(snapshot);
+    ApplyAction(best);
+}
+
 void AITank::Update(float deltaTime) {
-    Sprite::Update(deltaTime);
-    Engine::Point nextPos = Position + Velocity * Speed * deltaTime;
+    Engine::Point fullMove = Velocity * Speed * deltaTime;
+    Engine::Point nextPos = Position + fullMove;
 
     if (!CheckCollision(nextPos)) {
-        Position = nextPos;
+        Position = nextPos; // 直接通過
+    } else {
+        Engine::Point xMove = Engine::Point(fullMove.x, 0);
+        Engine::Point yMove = Engine::Point(0, fullMove.y);
+        if (!CheckCollision(Position + xMove)) {
+            Position = Position + xMove;
+        } else if (!CheckCollision(Position + yMove)) {
+            Position = Position + yMove;
+        }
     }
 
-    // Update shoot cooldown
     if (shootCooldown > 0) {
         shootCooldown -= deltaTime;
     }

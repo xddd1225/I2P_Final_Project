@@ -7,12 +7,14 @@
 #include <map>
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
-// #include "Scene/PlayScene.hpp"
-class PlayScene; 
+
+
+class PlayScene;
+class AIStrategy;
 class Tank : public Engine::Sprite {
 public:
     explicit Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
-
+    Tank(const Tank& other);
     void Update(float deltaTime) override;
     void OnKeyDown(int keyCode);
     void OnKeyUp(int keyCode);
@@ -21,6 +23,7 @@ public:
     PlayScene* getPlayScene();
 
 private:
+    friend class AIstrategy;
     std::vector<std::vector<int>>* mapState;
     std::map<int, bool> pressedKey;
     int mapWidth, mapHeight;

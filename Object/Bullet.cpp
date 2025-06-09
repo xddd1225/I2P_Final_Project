@@ -63,9 +63,9 @@ bool Bullet::CheckCollision(Engine::Point nextPos) {
     }
     // Check tank collision
     PlayScene* scene = getPlayScene();
-    Engine::Point target = scene->AITank->Position;
+    Engine::Point target = scene->aiTank->Position;
     if (Engine::Collider::IsCircleOverlap(nextPos, 0, target, 24)) {
-        scene->AITank->hurt(1);
+        scene->aiTank->hurt(1);
         return true;
     }
     

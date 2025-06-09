@@ -45,6 +45,8 @@ add_executable(Final_Project
     Object/AITank.hpp
     Object/Bullet.cpp
     Object/Bullet.hpp
+    Object/AIStrategy.cpp
+    Object/AIStrategy.hpp
     
     Scene/PlayScene.cpp
     Scene/PlayScene.hpp
