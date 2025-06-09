@@ -9,6 +9,7 @@
 #include "Engine/IScene.hpp"
 #include "Engine/Point.hpp"
 #include "Object/Tank.hpp"
+#include "Object/AITank.hpp"
 
 class PlayScene final : public Engine::IScene {
 public:
@@ -27,7 +28,7 @@ public:
 
     std::vector<std::vector<int>> mapState;
     Tank* playerTank;
-    Tank* AITank;
+    AITank* aiTank;
 
     explicit PlayScene() = default;
     void Initialize() override;

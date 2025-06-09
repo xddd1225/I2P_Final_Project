@@ -12,23 +12,44 @@ PlayScene *Tank::getPlayScene() {
 }
 
 Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
-    : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight) {
-    Speed = 100;
+    : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight){
+    Speed = 300;
     Size.x = 64;
     Size.y = 64;
     maxlife = life = 3;
     Velocity = Engine::Point(0, 0);
 }
 
+Tank::Tank(const Tank& other)
+    : Engine::Sprite(other) // 如果 Sprite 有複製建構子，建議初始化列表帶入
+{
+    mapState = other.mapState;
+    mapWidth = other.mapWidth;
+    mapHeight = other.mapHeight;
+    Speed = other.Speed;
+    Size = other.Size;
+    life = other.life;
+    Velocity = other.Velocity;
+    shootCooldown = other.shootCooldown;
+}
+
 void Tank::Update(float deltaTime) {
-    Sprite::Update(deltaTime);
-    Engine::Point nextPos = Position + Velocity * Speed * deltaTime;
+    Velocity = Velocity.Normalize();
+    Engine::Point fullMove = Velocity * Speed * deltaTime;
+    Engine::Point nextPos = Position + fullMove;
 
     if (!CheckCollision(nextPos)) {
-        Position = nextPos;
+        Position = nextPos; // 直接通過
+    } else {
+        Engine::Point xMove = Engine::Point(fullMove.x, 0);
+        Engine::Point yMove = Engine::Point(0, fullMove.y);
+        if (!CheckCollision(Position + xMove)) {
+            Position = Position + xMove;
+        } else if (!CheckCollision(Position + yMove)) {
+            Position = Position + yMove;
+        }
     }
 
-    // Update shoot cooldown
     if (shootCooldown > 0) {
         shootCooldown -= deltaTime;
     }
@@ -105,6 +126,8 @@ void Tank::OnKeyDown(int keyCode) {
     case ALLEGRO_KEY_D:
         Velocity.x = 1;
         break;
+    case ALLEGRO_KEY_SPACE:
+        break;
     }
     if (Velocity.x!=0&&Velocity.y!=0){
         Velocity.x = (Velocity.x>0?1:-1)*sqrt(2)/2;
@@ -132,7 +155,6 @@ void Tank::OnKeyUp(int keyCode) {
     }
     case ALLEGRO_KEY_A:{
         Velocity.x = 0;
-        std::cout << pressedKey[ALLEGRO_KEY_D]  << std::endl;
         if (pressedKey[ALLEGRO_KEY_D])
             Velocity.x=1;
         break;
@@ -157,7 +179,7 @@ void Tank::hurt(int damage) {
 void Tank::Shoot(float targetX, float targetY) {
     if (shootCooldown <= 0) {
         // Create a new bullet at the tank's position
-        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight);
+        Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight, 0);
         getPlayScene()->BulletGroup->AddNewObject(bullet);
         shootCooldown = SHOOT_COOLDOWN_TIME;
     }

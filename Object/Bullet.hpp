@@ -13,6 +13,7 @@ private:
     PlayScene *getPlayScene();
 
 public:
-    Bullet(float x, float y, float targetX, float targetY, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
+    int target;
+    Bullet(float x, float y, float targetX, float targetY, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight, int target);
     void Update(float deltaTime) override;
 };

@@ -8,12 +8,14 @@
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
 #include <allegro5/allegro_primitives.h>
-// #include "Scene/PlayScene.hpp"
-class PlayScene; 
+
+
+class PlayScene;
+class AIStrategy;
 class Tank : public Engine::Sprite {
 public:
     explicit Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
-
+    Tank(const Tank& other);
     void Update(float deltaTime) override;
     void OnKeyDown(int keyCode);
     void OnKeyUp(int keyCode);
@@ -22,15 +24,15 @@ public:
     PlayScene* getPlayScene();
 
 private:
+    friend class AIstrategy;
     std::vector<std::vector<int>>* mapState;
     std::map<int, bool> pressedKey;
     int mapWidth, mapHeight;
     Engine::Point Velocity;
     float Speed;
     float shootCooldown = 0;
-    int life;
-    int maxlife;
-    const float SHOOT_COOLDOWN_TIME = 0.01f; // Time between shots in seconds
+    int life, maxlife;
+    const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
     
     bool CheckCollision(Engine::Point nextPos);
     void Draw() const override;
