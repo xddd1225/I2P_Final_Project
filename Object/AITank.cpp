@@ -18,7 +18,7 @@ AITank::AITank(float x, float y, std::vector<std::vector<int>>* mapState, int ma
     Speed = 300;
     Size.x = 64;
     Size.y = 64;
-    life = 300;
+    maxlife = life = 3;
     Velocity = Engine::Point(0, 0);
 }
 
@@ -100,6 +100,37 @@ bool AITank::CheckCollision(Engine::Point nextPos) {
     }
 
     return false;
+}
+
+void AITank::Draw() const {
+    Sprite::Draw();
+    std::cout << life << " " << maxlife << std::endl;
+    const float barWidth = 40;
+    const float barHeight = 6;
+    const float offsetY = -Size.y / 2 - 10;
+
+    float x = Position.x;
+    float y = Position.y + offsetY;
+
+    float ratio = std::max(0.0f, std::min(1.0f, static_cast<float>(life) / maxlife));
+
+    al_draw_filled_rectangle(
+        x - barWidth / 2, y,
+        x + barWidth / 2, y + barHeight,
+        al_map_rgb(100, 100, 100)
+    );
+
+    al_draw_filled_rectangle(
+        x - barWidth / 2, y,
+        x - barWidth / 2 + barWidth * ratio, y + barHeight,
+        al_map_rgb(255, 0, 0)
+    );
+
+    al_draw_rectangle(
+        x - barWidth / 2, y,
+        x + barWidth / 2, y + barHeight,
+        al_map_rgb(0, 0, 0), 1.0
+    );
 }
 
 void AITank::hurt(int damage) {

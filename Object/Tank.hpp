@@ -31,7 +31,7 @@ private:
     Engine::Point Velocity;
     float Speed;
     float shootCooldown = 0;
-    int life;
+    int life, maxlife;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
     
     bool CheckCollision(Engine::Point nextPos);

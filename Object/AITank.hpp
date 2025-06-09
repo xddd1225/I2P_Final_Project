@@ -18,6 +18,7 @@ public:
     explicit AITank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
     AITank(const AITank& tank);
     void Update(float deltaTime) override;
+    void Draw() const override;
     void Shoot(float targetX, float targetY);
     void PropertyChange(float deltaTime);
     void hurt(int damage);
@@ -34,7 +35,7 @@ public:
     Engine::Point Velocity;
     float Speed;
     float shootCooldown = 0;
-    int life;
+    int maxlife, life;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
     
     bool CheckCollision(Engine::Point nextPos);

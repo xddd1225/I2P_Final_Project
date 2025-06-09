@@ -43,19 +43,6 @@ State::State(const State& state) {
     }
 }
 
-// State::~State() {
-//     delete ai;
-//     delete player;
-// }
-
-// State& operator=(const State& other) {
-//     if (this != &other) {
-//         delete scene;
-//         scene = other.scene->Clone();
-//     }
-//     return *this;
-// }
-
 
 void State::ApplyAction(const Action& act){
     ai->ApplyAction(act);
@@ -141,8 +128,8 @@ float State::EvaluateScore() const {
             score += BulletThreatToPoint(b, ai->Position);
         }
     }
-    std::cout << score << std::endl;
-    return score/10;
+    // std::cout << score << std::endl;
+    return score/10 + abs(bfs_dist-10);
 }
 
 

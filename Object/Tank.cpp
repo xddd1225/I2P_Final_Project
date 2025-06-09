@@ -155,7 +155,6 @@ void Tank::OnKeyUp(int keyCode) {
     }
     case ALLEGRO_KEY_A:{
         Velocity.x = 0;
-        std::cout << pressedKey[ALLEGRO_KEY_D]  << std::endl;
         if (pressedKey[ALLEGRO_KEY_D])
             Velocity.x=1;
         break;
@@ -173,7 +172,7 @@ void Tank::OnKeyUp(int keyCode) {
 void Tank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
-        // getPlayScene()->RemoveObject(objectIterator);
+        getPlayScene()->RemoveObject(objectIterator);
     }
 }
 
