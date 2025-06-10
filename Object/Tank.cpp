@@ -34,6 +34,7 @@ Tank::Tank(const Tank& other)
 }
 
 void Tank::Update(float deltaTime) {
+    if(getPlayScene()->isGameOver) return;
     Velocity = Velocity.Normalize();
     Engine::Point fullMove = Velocity * Speed * deltaTime;
     Engine::Point nextPos = Position + fullMove;
@@ -174,6 +175,7 @@ void Tank::hurt(int damage) {
     if (life <= 0){
         PlayScene* scene = getPlayScene();
         scene->RemoveObject(objectIterator);
+        scene->playerTank = nullptr;    // prevent crash (e.g., move tank after game over)
         scene->showGameOverDialog("You Lose!");
     }
 }
