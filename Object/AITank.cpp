@@ -136,7 +136,9 @@ void AITank::Draw() const {
 void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
-        getPlayScene()->RemoveObject(objectIterator);
+        PlayScene* scene = getPlayScene();
+        scene->RemoveObject(objectIterator);
+        scene->showGameOverDialog("You Win!");
     }
 }
 

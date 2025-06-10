@@ -50,6 +50,8 @@ add_executable(Final_Project
     
     Scene/PlayScene.cpp
     Scene/PlayScene.hpp
+    Scene/HomeScene.cpp
+    Scene/HomeScene.hpp
 
     UI/Component/Image.cpp
     UI/Component/Image.hpp

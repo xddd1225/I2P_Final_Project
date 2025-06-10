@@ -172,7 +172,9 @@ void Tank::OnKeyUp(int keyCode) {
 void Tank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
-        getPlayScene()->RemoveObject(objectIterator);
+        PlayScene* scene = getPlayScene();
+        scene->RemoveObject(objectIterator);
+        scene->showGameOverDialog("You Lose!");
     }
 }
 
