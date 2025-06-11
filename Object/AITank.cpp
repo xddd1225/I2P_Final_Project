@@ -74,14 +74,14 @@ void AITank::Update(float deltaTime) {
     int targetY = scene->playerTank->Position.y;
     if (shoot) {
         Shoot(targetX, targetY);
+        shoot = false;
+    }
 
     headRotation = atan2(targetY - Position.y, targetX - Position.x) - ALLEGRO_PI / 2;
     head.Rotation = headRotation;
     head.Position = Position;
     head.Size = Size;
     head.Update(deltaTime);
-        shoot = false;
-    }
 }
 
 void AITank::PropertyChange(float deltaTime){
