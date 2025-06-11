@@ -16,7 +16,7 @@ Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWid
     Speed = 300;
     Size.x = 64;
     Size.y = 64;
-    maxlife = life = 3;
+    maxlife = life = 5;
     Velocity = Engine::Point(0, 0);
 }
 

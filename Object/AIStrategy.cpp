@@ -199,8 +199,11 @@ float State::EvaluateScore() const {
             score += BulletThreatToPoint(b, ai->Position);
         }
     }
-    // std::cout << DFSdodge() << std::endl;
-    return score + abs(bfs_dist-15) + hitCount*1e5;
+    if (ai->aggressive){
+        return score + abs(bfs_dist-1) + hitCount*1e5;
+    }else{
+        return score + abs(bfs_dist-15) + hitCount*1e5;
+    }
 }
 
 

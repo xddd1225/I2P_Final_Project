@@ -37,8 +37,8 @@ private:
     float AccelerationSpeed = 5.0f;
 
     bool isDashing = false;
-    float dashDuration = 0.2f;       // 衝刺持續時間（秒）
-    float dashCooldown = 1.0f;       // 衝刺冷卻時間（秒）
+    float dashDuration = 0.16f;       // 衝刺持續時間（秒）
+    float dashCooldown = 0.3f;       // 衝刺冷卻時間（秒）
     float dashTimer = 0.0f;          // 當前衝刺剩餘時間
     float dashCooldownTimer = 0.0f;  // 冷卻時間計時器
     

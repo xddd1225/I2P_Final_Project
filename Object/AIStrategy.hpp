@@ -50,6 +50,7 @@ public:
     int MapHeight;
     int MapWidth;
     int hitCount;
+    float moodTimer = 0.0f;
 };
 
 
@@ -73,5 +74,6 @@ private:
     int numRollouts;
     float deltaTime;
     int rolloutSteps;
+    float moodTimer = 0.0f;
 };
 #endif // AISTRATEGY_HPP
