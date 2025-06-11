@@ -37,22 +37,18 @@ void Tank::Update(float deltaTime) {
     if (getPlayScene()->isGameOver) return;
 
     // 更新衝刺狀態
-    // if (isDashing) {
-    //     dashTimer -= deltaTime;
-    //     if (dashTimer <= 0) {
-    //         isDashing = false;
-    //         dashCooldownTimer = dashCooldown;
-    //     }
-    // } else if (dashCooldownTimer > 0) {
-    //     dashCooldownTimer -= deltaTime;
-    // }
-    // float accel = AccelerationSpeed * deltaTime;
-    // float friction = 5.0f * deltaTime;
-    // float speedMultiplier = isDashing ? 2.5f : 1.0f;  // 衝刺加速
-
-    // 模擬加速度與摩擦力
+    if (isDashing) {
+        dashTimer -= deltaTime;
+        if (dashTimer <= 0) {
+            isDashing = false;
+            dashCooldownTimer = dashCooldown;
+        }
+    } else if (dashCooldownTimer > 0) {
+        dashCooldownTimer -= deltaTime;
+    }
     float accel = AccelerationSpeed * deltaTime;
-    float friction = 5.0f * deltaTime; // 可調整摩擦係數
+    float friction = 5.0f * deltaTime;
+    float speedMultiplier = isDashing ? 2.5f : 1.0f;  // 衝刺加速
 
     // X 軸處理
     if (std::abs(TargetVelocity.x) > 0.01f) {
@@ -71,7 +67,7 @@ void Tank::Update(float deltaTime) {
     }
 
     Engine::Point normVel = Velocity.Normalize();
-    Engine::Point fullMove = normVel * Speed * deltaTime;
+    Engine::Point fullMove = normVel * Speed * deltaTime * speedMultiplier;
     Engine::Point nextPos = Position + fullMove;
 
     if (!CheckCollision(nextPos)) {
@@ -162,8 +158,13 @@ void Tank::OnKeyDown(int keyCode) {
     case ALLEGRO_KEY_D:
         TargetVelocity.x = 1;
         break;
-    case ALLEGRO_KEY_SPACE:
+    case ALLEGRO_KEY_SPACE: {
+        if (!isDashing && dashCooldownTimer <= 0 && (Velocity.x != 0 || Velocity.y != 0)) {
+            isDashing = true;
+            dashTimer = dashDuration;
+        }
         break;
+    }
     }
 
     if (TargetVelocity.x != 0 && TargetVelocity.y != 0) {
