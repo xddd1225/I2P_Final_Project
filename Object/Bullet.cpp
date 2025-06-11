@@ -30,8 +30,55 @@ void Bullet::Update(float deltaTime) {
     Sprite::Update(deltaTime);
     Engine::Point nextPos = Position + Velocity * Speed * deltaTime;
     PlayScene* scene = getPlayScene();
-    if (CheckCollision(nextPos)) {
-        // Remove bullet on collision
+    
+    bool collided = false;
+    Engine::Point oldPos = Position;
+
+    float hitboxShrink = 0.1f;
+    Engine::Point hitboxSize = Size * hitboxShrink;
+    Engine::Point nextMin = nextPos - hitboxSize / 2;
+    Engine::Point nextMax = nextPos + hitboxSize / 2;
+
+    // 檢查牆壁反彈
+    for (int y = 0; y < mapHeight; ++y) {
+        for (int x = 0; x < mapWidth; ++x) {
+            if ((*mapState)[y][x] == PlayScene::TILE_WALL) {
+                Engine::Point wallMin(x * 64, y * 64);
+                Engine::Point wallMax = wallMin + Engine::Point(64, 64);
+                if (Engine::Collider::IsRectOverlap(nextMin, nextMax, wallMin, wallMax)) {
+                    collided = true;
+
+                    if (!hasBounced) {
+    // 檢查水平方向反彈
+    Engine::Point testX = oldPos + Engine::Point(Velocity.x * Speed * deltaTime, 0);
+    Engine::Point testY = oldPos + Engine::Point(0, Velocity.y * Speed * deltaTime);
+    if (Engine::Collider::IsRectOverlap(testX - hitboxSize / 2, testX + hitboxSize / 2, wallMin, wallMax)) {
+        Velocity.x = -Velocity.x;
+    }
+    if (Engine::Collider::IsRectOverlap(testY - hitboxSize / 2, testY + hitboxSize / 2, wallMin, wallMax)) {
+        Velocity.y = -Velocity.y;
+    }
+    Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
+
+    hasBounced = true;
+    return;  // 本幀不移動，讓反彈生效
+} else {
+                        scene->RemoveObject(objectIterator); // 第二次撞牆才刪除
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    // 檢查擊中目標
+    Engine::Point aitarget = scene->aiTank->Position;
+    Engine::Point playertarget = scene->playerTank->Position;
+    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+        scene->aiTank->hurt(1);
+        scene->RemoveObject(objectIterator);
+    } else if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+        scene->playerTank->hurt(1);
         scene->RemoveObject(objectIterator);
     } else {
         Position = nextPos;
