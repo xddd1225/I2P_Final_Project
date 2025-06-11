@@ -9,10 +9,10 @@
 void HistoryScene::Initialize() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
-    int startY = 120;
+    int startY = 125;
     int lineHeight = 40;
 
-    AddNewObject(new Engine::Label("History", "pirulen.ttf", 64, w / 2, 50, 255, 255, 255, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("History", "PixelatedElegance.ttf", 64, w / 2, 60, 255, 255, 255, 255, 0.5, 0.5));
 
     AddNewObject(new Engine::Label("Time", "pirulen.ttf", 32, w/4, startY, 255, 255, 0, 255, 0.5, 0.5));
     AddNewObject(new Engine::Label("Stage", "pirulen.ttf", 32, w/2, startY, 255, 255, 0, 255, 0.5, 0.5));
@@ -34,10 +34,10 @@ void HistoryScene::Initialize() {
         y += lineHeight;
     }
 
-    auto* btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", w / 2 - 200, h - 120, 400, 100);
+    auto* btn = new Engine::ImageButton("stage-select/button.png", "stage-select/buttonOn.png", w / 2 - 200, h - 120, 400, 100);
     btn->SetOnClickCallback(std::bind(&HistoryScene::BackOnClick, this));
     AddNewControlObject(btn);
-    AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, w / 2, h - 70, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(new Engine::Label("Back", "PixelatedElegance.ttf", 48, w / 2, h - 65, 0, 0, 0, 255, 0.5, 0.5));
 }
 
 void HistoryScene::LoadHistory() {

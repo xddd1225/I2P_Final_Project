@@ -227,7 +227,7 @@ void PlayScene::showGameOverDialog(const std::string& message){
     int halfH = Engine::GameEngine::GetInstance().GetScreenSize().y/2;
     gameOverText = new Engine::Label(
         message, 
-        "pirulen.ttf",
+        "PixelatedElegance.ttf",
         48,
         halfW, halfH-50,
         10, 10, 10, 255, 0.5, 0.5
@@ -246,7 +246,7 @@ void PlayScene::showGameOverDialog(const std::string& message){
     AddNewControlObject(backButton);
     backButtonLabel = new Engine::Label(
         "Back to Home",
-        "pirulen.ttf",
+        "PixelatedElegance.ttf",
         30,
         halfW, halfH+100,
         0, 0, 0, 255, 0.5, 0.5
