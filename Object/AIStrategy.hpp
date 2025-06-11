@@ -32,6 +32,7 @@ public:
     void Simulate(float deltaTime);
     float EvaluateScore() const;
     bool IsTerminal() const;
+    void Step(float dt);
     enum TileType {
         TILE_FLOOR,
         TILE_WALL,
@@ -46,6 +47,7 @@ public:
     int BlockSize;
     int MapHeight;
     int MapWidth;
+    int hitCount;
 };
 
 

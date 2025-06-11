@@ -4,6 +4,8 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <chrono>
+#include <ctime>
 #include "Object/Bullet.hpp"
 
 // // const Engine::Point DirectionVectors[];
@@ -17,6 +19,7 @@ State::State(PlayScene* scene) {
     BlockSize = scene->BlockSize;
     MapHeight = scene->MapHeight;
     MapWidth = scene->MapWidth;
+    hitCount = 0;
     bullets.clear();
     for (auto& obj : scene->BulletGroup->GetObjects()) {
         Bullet* b = dynamic_cast<Bullet*>(obj);
@@ -33,12 +36,11 @@ State::State(const State& state) {
     BlockSize = state.BlockSize;
     MapHeight = state.MapHeight;
     MapWidth = state.MapWidth;
+    hitCount = state.hitCount;
     bullets.clear();
-    PlayScene* scene = ai->getPlayScene();
-    for (auto& obj : scene->BulletGroup->GetObjects()) {
-        Bullet* b = dynamic_cast<Bullet*>(obj);
+    for (Bullet* b : state.bullets) {
         if (b) {
-            bullets.push_back(new Bullet(*b));  // 假設 Bullet 有正確的複製建構子
+            bullets.push_back(new Bullet(*b));  // 深拷貝 bullet
         }
     }
 }
@@ -51,12 +53,30 @@ void State::Simulate(float deltaTime){
     const float fixedStep = 0.01f;
     float elapsed = 0.0f;
     while (elapsed + fixedStep <= deltaTime) {
-        ai->PropertyChange(fixedStep);
+        Step(fixedStep);
         elapsed += fixedStep;
     }
     // 最後補上不足的時間（如果有）
     if (elapsed < deltaTime) {
-        ai->PropertyChange(deltaTime - elapsed);
+        Step(deltaTime - elapsed);
+    }
+}
+void State::Step(float dt){
+    ai->PropertyChange(dt);
+    vector<Bullet*> toDestroy;
+    for (Bullet* blt: bullets){
+        vector<int> result = blt->SimulateUpdate(dt);
+        // result: wall, hit ai, hit player
+        if (!blt->simDestroy) continue;
+        // hit target or wall
+        toDestroy.push_back(blt);
+        if (result[1]) { // hit ai
+            ++hitCount;
+        }
+    }
+    for (Bullet* b : toDestroy) {
+        bullets.erase(std::remove(bullets.begin(), bullets.end(), b), bullets.end());
+        delete b;  // 若 bullet 是 new 出來的
     }
 }
 
@@ -128,8 +148,13 @@ float State::EvaluateScore() const {
             score += BulletThreatToPoint(b, ai->Position);
         }
     }
-    // std::cout << score << std::endl;
-    return score/10 + abs(bfs_dist-10);
+    if (hitCount){
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::cout << std::ctime(&now_time) << " hitCount: " << hitCount << std::endl;
+    }
+    
+    return score/10 + abs(bfs_dist-10) + hitCount*1e5;
 }
 
 

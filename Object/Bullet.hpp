@@ -14,6 +14,8 @@ private:
 
 public:
     int target;
+    int simDestroy; // if collision then true (simulation update)
     Bullet(float x, float y, float targetX, float targetY, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight, int target);
     void Update(float deltaTime) override;
+    std::vector<int> SimulateUpdate(float deltaTime);
 };

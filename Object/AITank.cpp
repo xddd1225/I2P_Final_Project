@@ -50,6 +50,7 @@ void AITank::Strategy() {
 void AITank::Update(float deltaTime) {
     PropertyChange(deltaTime);
     PlayScene* scene = getPlayScene();
+    if(scene->isGameOver) return;
     int targetX = scene->playerTank->Position.x;
     int targetY = scene->playerTank->Position.y;
     Shoot(targetX, targetY);
@@ -136,7 +137,9 @@ void AITank::Draw() const {
 void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
-        getPlayScene()->RemoveObject(objectIterator);
+        PlayScene* scene = getPlayScene();
+        scene->RemoveObject(objectIterator);
+        scene->showGameOverDialog("You Win!");
     }
 }
 

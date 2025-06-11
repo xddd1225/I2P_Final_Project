@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <allegro5/allegro.h>
 #include <cmath>
 #include <fstream>
@@ -7,6 +6,8 @@
 #include <queue>
 #include <string>
 #include <vector>
+#include <random>
+
 #include <allegro5/allegro_primitives.h>
 
 #include "Engine/AudioHelper.hpp"
@@ -57,10 +58,6 @@ void PlayScene::Initialize() {
 void PlayScene::GenerateMaze() {
     mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_WALL));
 
-    for (int y = 0; y < MapHeight; ++y)
-        for (int x = 0; x < MapWidth; ++x)
-            mapState[y][x] = TILE_WALL;
-
     auto InBounds = [&](int x, int y) {
         return x >= 0 && x < MapWidth && y >= 0 && y < MapHeight;
     };
@@ -86,6 +83,7 @@ void PlayScene::GenerateMaze() {
         int idx = rand() % frontier.size();
         auto [fx, fy] = frontier[idx];
         frontier.erase(frontier.begin() + idx);
+
         std::vector<Cell> neighbors;
         if (InBounds(fx + 2, fy) && mapState[fy][fx + 2] == TILE_FLOOR)
             neighbors.push_back({fx + 2, fy});
@@ -100,6 +98,24 @@ void PlayScene::GenerateMaze() {
             auto [nx, ny] = neighbors[rand() % neighbors.size()];
             mapState[fy][fx] = TILE_FLOOR;
             mapState[(fy + ny) / 2][(fx + nx) / 2] = TILE_FLOOR;
+
+            // 額外開通一格牆壁，增加空曠度（25% 機率）
+            if (rand() % 4 == 0) {
+                std::vector<Cell> dirs = {{2, 0}, {-2, 0}, {0, 2}, {0, -2}};
+                std::random_device rd;
+                std::mt19937 g(rd());
+                std::shuffle(dirs.begin(), dirs.end(), g);
+                std::shuffle(dirs.begin(), dirs.end(), g);
+                for (auto d : dirs) {
+                    int ex = fx + d.x, ey = fy + d.y;
+                    if (InBounds(ex, ey) && mapState[ey][ex] == TILE_WALL) {
+                        mapState[ey][ex] = TILE_FLOOR;
+                        mapState[(ey + fy) / 2][(ex + fx) / 2] = TILE_FLOOR;
+                        break;
+                    }
+                }
+            }
+
             AddFrontier(fx + 2, fy);
             AddFrontier(fx - 2, fy);
             AddFrontier(fx, fy + 2);
@@ -109,11 +125,17 @@ void PlayScene::GenerateMaze() {
         }
     }
 
+    // 清除暫存狀態（-1）
     for (int y = 0; y < MapHeight; ++y)
         for (int x = 0; x < MapWidth; ++x)
             if (mapState[y][x] == -1)
                 mapState[y][x] = TILE_WALL;
-    // mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
+
+    // 額外隨機清除一些牆（10% 機率），提升通透性
+    for (int y = 1; y < MapHeight - 1; ++y)
+        for (int x = 1; x < MapWidth - 1; ++x)
+            if (mapState[y][x] == TILE_WALL && rand() % 10 == 0)
+                mapState[y][x] = TILE_FLOOR;
 }
 
 void PlayScene::Terminate() {
@@ -121,12 +143,20 @@ void PlayScene::Terminate() {
 }
 
 void PlayScene::Update(float deltaTime) {
+    if(isGameOver) return;
     aiTank->Strategy();
     IScene::Update(deltaTime);
 }
 
 void PlayScene::Draw() const {
     IScene::Draw();
+    if(isGameOver){
+        auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
+        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(255, 255, 255, 90));
+        gameOverText->Draw();
+        backButton->Draw();
+        backButtonLabel->Draw();
+    }
 }
 
 void PlayScene::OnKeyDown(int keyCode) {
@@ -146,4 +176,36 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
     if (button == 1 && playerTank) { // Left mouse button
         playerTank->Shoot(mx, my);
     }
+}
+
+void PlayScene::showGameOverDialog(const std::string& message){
+    isGameOver = true;
+    int halfW = Engine::GameEngine::GetInstance().GetScreenSize().x/2;
+    int halfH = Engine::GameEngine::GetInstance().GetScreenSize().y/2;
+    gameOverText = new Engine::Label(
+        message, 
+        "pirulen.ttf",
+        48,
+        halfW, halfH-50,
+        255, 255, 255, 255, 0.5, 0.5
+    );
+    AddNewObject(gameOverText);
+    backButton = new Engine::ImageButton(
+        "play/dirt.png",
+        "play/floor.png",   // button img when hovered
+        halfW-200, halfH+50, 
+        400, 100            // button size
+    );
+    backButton->SetOnClickCallback([this]() {   // `this` needs to be passed
+        isGameOver = false;
+        Engine::GameEngine::GetInstance().ChangeScene("home");
+    });
+    AddNewControlObject(backButton);
+    backButtonLabel = new Engine::Label(
+        "Back to Home",
+        "pirulen.ttf",
+        30,
+        halfW, halfH+100,
+        0, 0, 0, 255, 0.5, 0.5
+    );
 }
