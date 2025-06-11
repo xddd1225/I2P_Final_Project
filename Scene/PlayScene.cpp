@@ -47,7 +47,7 @@ void PlayScene::Initialize() {
         for (int x = 0; x < MapWidth; ++x) {
 
             if (mapState[y][x] == TILE_WALL) {
-                WallGroup->AddNewObject(new Engine::Image("play/dirt.png", x * BlockSize, y * BlockSize));
+                WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
             }else{
                 GroundGroup->AddNewObject(new Engine::Image("play/floor.png", x * BlockSize, y * BlockSize));
             }
@@ -158,7 +158,8 @@ void PlayScene::Draw() const {
     IScene::Draw();
     if(isGameOver){
         auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
-        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(255, 255, 255, 90));
+        // mask in game over dialog
+        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(255, 255, 255, 120));
         gameOverText->Draw();
         backButton->Draw();
         backButtonLabel->Draw();
@@ -193,14 +194,14 @@ void PlayScene::showGameOverDialog(const std::string& message){
         "pirulen.ttf",
         48,
         halfW, halfH-50,
-        255, 255, 255, 255, 0.5, 0.5
+        10, 10, 10, 255, 0.5, 0.5
     );
     AddNewObject(gameOverText);
     backButton = new Engine::ImageButton(
-        "play/dirt.png",
-        "play/floor.png",   // button img when hovered
-        halfW-200, halfH+50, 
-        400, 100            // button size
+        "stage-select/button.png",
+        "stage-select/buttonOn.png",   // button img when hovered
+        halfW-200, halfH+50,
+        400, 100           // button size
     );
     backButton->SetOnClickCallback([this]() {   // `this` needs to be passed
         isGameOver = false;
