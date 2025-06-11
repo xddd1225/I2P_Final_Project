@@ -141,7 +141,7 @@ void PlayScene::GenerateMaze() {
         for (int x = 1; x < MapWidth - 1; ++x)
             if (mapState[y][x] == TILE_WALL && rand() % 10 == 0)
                 mapState[y][x] = TILE_FLOOR;
-    // mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
+    mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
 }
 
 void PlayScene::Terminate() {

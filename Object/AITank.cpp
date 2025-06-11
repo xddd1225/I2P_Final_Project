@@ -127,7 +127,6 @@ bool AITank::CheckCollision(Engine::Point nextPos) {
 
 void AITank::Draw() const {
     Sprite::Draw();
-    // std::cout << life << " " << maxlife << std::endl;
     const float barWidth = 40;
     const float barHeight = 6;
     const float offsetY = -Size.y / 2 - 10;
@@ -160,7 +159,7 @@ void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
         PlayScene* scene = getPlayScene();
-        scene->RemoveObject(objectIterator);
+        // scene->RemoveObject(objectIterator);
         scene->showGameOverDialog("You Win!");
     }
 }
