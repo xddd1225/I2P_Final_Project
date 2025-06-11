@@ -5,6 +5,8 @@
 #include "Engine/LOG.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Scene/HomeScene.hpp"
+#include "Scene/StageSelectScene.hpp"
+#include "Scene/HistoryScene.hpp"
 
 int main(int argc, char **argv) {
 	Engine::LOG::SetConfig(true);
@@ -12,6 +14,8 @@ int main(int argc, char **argv) {
 
 	game.AddNewScene("home", new HomeScene());
 	game.AddNewScene("play", new PlayScene());
+	game.AddNewScene("stage-select", new StageSelectScene());
+	game.AddNewScene("history", new HistoryScene());
 
 	game.Start("home", 60, 1600, 832);
 	return 0;

@@ -36,6 +36,7 @@ public:
     Engine::Label* gameOverText = nullptr;
     Engine::ImageButton* backButton = nullptr;
     Engine::Label* backButtonLabel = nullptr;
+    int stageID = 0;
 
     explicit PlayScene() = default;
     void Initialize() override;
@@ -45,8 +46,11 @@ public:
     void OnKeyDown(int keyCode) override;
     void OnKeyUp(int keyCode) override;
     void GenerateMaze();
+    void LoadFixedMap();
     void OnMouseDown(int button, int mx, int my) override;
     void showGameOverDialog(const std::string& message);
+    void SaveGameResult(const std::string& winner);
+
 };
 
 #endif   // PLAYSCENE_HPP

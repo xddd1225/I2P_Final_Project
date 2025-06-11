@@ -22,7 +22,13 @@
 
 void PlayScene::Initialize() {
     srand(static_cast<unsigned int>(time(nullptr)));
-    GenerateMaze();
+
+    if(stageID == 1){
+        LoadFixedMap();
+    }else if(stageID == 2){
+        GenerateMaze();
+    }
+    
 
     for (int y = 0; y < 3; ++y)
         for (int x = 0; x < 3; ++x)
@@ -59,6 +65,31 @@ void PlayScene::Initialize() {
     TankGroup->AddNewObject(playerTank);
     TankGroup->AddNewObject(aiTank);
 }
+
+void PlayScene::LoadFixedMap() {
+    mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
+
+    for (int x = 3; x < MapWidth-3; ++x) {
+        mapState[3][x] = TILE_WALL;
+        mapState[MapHeight - 4][x] = TILE_WALL;
+    }
+    for (int y = 3; y < MapHeight-3; ++y) {
+        mapState[y][3] = TILE_WALL;
+        mapState[y][MapWidth - 4] = TILE_WALL;
+    }
+    for (int x = 11; x < 14; ++x) {
+        mapState[3][x] = TILE_FLOOR;
+        mapState[MapHeight - 4][x] = TILE_FLOOR;
+    }
+    for (int y = 5; y < 8; ++y) {
+        mapState[y][3] = TILE_FLOOR;
+        mapState[y][MapWidth - 4] = TILE_FLOOR;
+    }
+    for (int x = 8; x < 17; ++x) {
+        mapState[6][x] = TILE_WALL;
+    }
+}
+
 
 void PlayScene::GenerateMaze() {
     mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_WALL));
@@ -104,7 +135,6 @@ void PlayScene::GenerateMaze() {
             mapState[fy][fx] = TILE_FLOOR;
             mapState[(fy + ny) / 2][(fx + nx) / 2] = TILE_FLOOR;
 
-            // 額外開通一格牆壁，增加空曠度（25% 機率）
             if (rand() % 4 == 0) {
                 std::vector<Cell> dirs = {{2, 0}, {-2, 0}, {0, 2}, {0, -2}};
                 std::random_device rd;
@@ -130,18 +160,16 @@ void PlayScene::GenerateMaze() {
         }
     }
 
-    // 清除暫存狀態（-1）
     for (int y = 0; y < MapHeight; ++y)
         for (int x = 0; x < MapWidth; ++x)
             if (mapState[y][x] == -1)
                 mapState[y][x] = TILE_WALL;
 
-    // 額外隨機清除一些牆（10% 機率），提升通透性
     for (int y = 1; y < MapHeight - 1; ++y)
         for (int x = 1; x < MapWidth - 1; ++x)
             if (mapState[y][x] == TILE_WALL && rand() % 10 == 0)
                 mapState[y][x] = TILE_FLOOR;
-    mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
+    //mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
 }
 
 void PlayScene::Terminate() {
@@ -185,6 +213,14 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
 }
 
 void PlayScene::showGameOverDialog(const std::string& message){
+    std::string winner;
+    if(message.find("Win") != std::string::npos){
+        winner = "You";
+    } else if(message.find("Lose") != std::string::npos){
+        winner = "AI";
+    }
+    SaveGameResult(winner);
+    
     isGameOver = true;
     int halfW = Engine::GameEngine::GetInstance().GetScreenSize().x/2;
     int halfH = Engine::GameEngine::GetInstance().GetScreenSize().y/2;
@@ -214,4 +250,17 @@ void PlayScene::showGameOverDialog(const std::string& message){
         halfW, halfH+100,
         0, 0, 0, 255, 0.5, 0.5
     );
+}
+
+void PlayScene::SaveGameResult(const std::string& winner) {
+    std::time_t t = std::time(nullptr);
+    std::tm* now = std::localtime(&t);
+    char timebuf[64];
+    std::strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", now);
+
+    std::ofstream ofs("Resource/history.txt", std::ios::app);
+    if (ofs.is_open()) {
+        ofs << timebuf << "," << stageID << "," << winner << std::endl;
+        ofs.close();
+    }
 }
