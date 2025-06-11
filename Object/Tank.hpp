@@ -15,7 +15,7 @@ class AIStrategy;
 class Tank : public Engine::Sprite {
 public:
     explicit Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
-    Tank(const Tank& other);
+    // Tank(const Tank& other);
     void Update(float deltaTime) override;
     void OnKeyDown(int keyCode);
     void OnKeyUp(int keyCode);
@@ -36,6 +36,8 @@ private:
     
     bool CheckCollision(Engine::Point nextPos);
     void Draw() const override;
+    Sprite head;
+    float headRotation = 0;
 };
 
 #endif // TANK_HPP

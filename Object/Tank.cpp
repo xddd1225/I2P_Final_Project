@@ -12,26 +12,27 @@ PlayScene *Tank::getPlayScene() {
 }
 
 Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight)
-    : Sprite("play/tank.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight){
+    : Sprite("play/TankPlayer.png", x, y), mapState(mapState), mapWidth(mapWidth), mapHeight(mapHeight),
+      head("play/TankPlayerHead.png", x, y, 42, 86, 0.5, 0.5){
     Speed = 300;
-    Size.x = 64;
-    Size.y = 64;
+    Size.x = 48;
+    Size.y = 76;
     maxlife = life = 3;
     Velocity = Engine::Point(0, 0);
 }
 
-Tank::Tank(const Tank& other)
-    : Engine::Sprite(other) // 如果 Sprite 有複製建構子，建議初始化列表帶入
-{
-    mapState = other.mapState;
-    mapWidth = other.mapWidth;
-    mapHeight = other.mapHeight;
-    Speed = other.Speed;
-    Size = other.Size;
-    life = other.life;
-    Velocity = other.Velocity;
-    shootCooldown = other.shootCooldown;
-}
+// Tank::Tank(const Tank& other)
+//     : Engine::Sprite(other), // 如果 Sprite 有複製建構子，建議初始化列表帶入
+// {
+//     mapState = other.mapState;
+//     mapWidth = other.mapWidth;
+//     mapHeight = other.mapHeight;
+//     Speed = other.Speed;
+//     Size = other.Size;
+//     life = other.life;
+//     Velocity = other.Velocity;
+//     shootCooldown = other.shootCooldown;
+// }
 
 void Tank::Update(float deltaTime) {
     if(getPlayScene()->isGameOver) return;
@@ -54,10 +55,17 @@ void Tank::Update(float deltaTime) {
     if (shootCooldown > 0) {
         shootCooldown -= deltaTime;
     }
+    Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
+    headRotation = atan2(mouse.y - Position.y, mouse.x - Position.x) - ALLEGRO_PI / 2;
+    head.Rotation = headRotation;
+    head.Position = Position;
+    head.Size = Size;
+    head.Update(deltaTime);
 }
 
 void Tank::Draw() const {
     Sprite::Draw();
+    head.Draw();
 
     const float barWidth = 40;
     const float barHeight = 6;

@@ -16,7 +16,7 @@ class PlayScene;
 class AITank : public Engine::Sprite {
 public:
     explicit AITank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWidth, int mapHeight);
-    AITank(const AITank& tank);
+    // AITank(const AITank& tank);
     void Update(float deltaTime) override;
     void Draw() const override;
     void Shoot(float targetX, float targetY);
@@ -37,6 +37,8 @@ public:
     float shootCooldown = 0;
     int maxlife, life;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
+    Sprite head;
+    float headRotation = 0;
     
     bool CheckCollision(Engine::Point nextPos);
     void extractState(PlayScene* scene);
