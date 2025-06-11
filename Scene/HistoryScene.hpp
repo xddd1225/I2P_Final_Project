@@ -10,10 +10,14 @@ public:
     void Initialize() override;
     void Terminate() override;
     void BackOnClick();
+    void NextPageOnClick();
+    void PrevPageOnClick();
 
 private:
     std::vector<std::string> historyEntries;
     void LoadHistory();
+    int curPage = 0;
+    const int recordsPerPage = 12;
 };
 
 #endif // HISTORY_SCENE_HPP
