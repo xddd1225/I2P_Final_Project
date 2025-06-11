@@ -10,6 +10,8 @@
 #include "Engine/Point.hpp"
 #include "Object/Tank.hpp"
 #include "Object/AITank.hpp"
+#include "UI/Component/Label.hpp"
+#include "UI/Component/ImageButton.hpp"
 
 class PlayScene final : public Engine::IScene {
 public:
@@ -30,6 +32,11 @@ public:
     Tank* playerTank;
     AITank* aiTank;
 
+    bool isGameOver = false;
+    Engine::Label* gameOverText = nullptr;
+    Engine::ImageButton* backButton = nullptr;
+    Engine::Label* backButtonLabel = nullptr;
+
     explicit PlayScene() = default;
     void Initialize() override;
     void Terminate() override;
@@ -39,6 +46,7 @@ public:
     void OnKeyUp(int keyCode) override;
     void GenerateMaze();
     void OnMouseDown(int button, int mx, int my) override;
+    void showGameOverDialog(const std::string& message);
 };
 
 #endif   // PLAYSCENE_HPP

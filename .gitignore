@@ -1,6 +1,5 @@
-# 忽略 build 檔案與目錄
-.make/
-build/
-
-# VSCode 設定檔
-.vscode/
+.vscode
+build
+*.dll
+allegro_monolith-5.2.dll
+log.txt

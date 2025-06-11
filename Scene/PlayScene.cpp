@@ -121,12 +121,20 @@ void PlayScene::Terminate() {
 }
 
 void PlayScene::Update(float deltaTime) {
+    if(isGameOver) return;
     aiTank->Strategy();
     IScene::Update(deltaTime);
 }
 
 void PlayScene::Draw() const {
     IScene::Draw();
+    if(isGameOver){
+        auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
+        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(255, 255, 255, 90));
+        gameOverText->Draw();
+        backButton->Draw();
+        backButtonLabel->Draw();
+    }
 }
 
 void PlayScene::OnKeyDown(int keyCode) {
@@ -146,4 +154,36 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
     if (button == 1 && playerTank) { // Left mouse button
         playerTank->Shoot(mx, my);
     }
+}
+
+void PlayScene::showGameOverDialog(const std::string& message){
+    isGameOver = true;
+    int halfW = Engine::GameEngine::GetInstance().GetScreenSize().x/2;
+    int halfH = Engine::GameEngine::GetInstance().GetScreenSize().y/2;
+    gameOverText = new Engine::Label(
+        message, 
+        "pirulen.ttf",
+        48,
+        halfW, halfH-50,
+        255, 255, 255, 255, 0.5, 0.5
+    );
+    AddNewObject(gameOverText);
+    backButton = new Engine::ImageButton(
+        "play/dirt.png",
+        "play/floor.png",   // button img when hovered
+        halfW-200, halfH+50, 
+        400, 100            // button size
+    );
+    backButton->SetOnClickCallback([this]() {   // `this` needs to be passed
+        isGameOver = false;
+        Engine::GameEngine::GetInstance().ChangeScene("home");
+    });
+    AddNewControlObject(backButton);
+    backButtonLabel = new Engine::Label(
+        "Back to Home",
+        "pirulen.ttf",
+        30,
+        halfW, halfH+100,
+        0, 0, 0, 255, 0.5, 0.5
+    );
 }
