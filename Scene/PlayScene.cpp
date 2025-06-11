@@ -55,7 +55,7 @@ void PlayScene::Initialize() {
             if (mapState[y][x] == TILE_WALL) {
                 WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
             }else{
-                GroundGroup->AddNewObject(new Engine::Image("play/floor.png", x * BlockSize, y * BlockSize));
+                GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
             }
         }
     }
@@ -248,7 +248,7 @@ void PlayScene::showGameOverDialog(const std::string& message){
         "Back to Home",
         "PixelatedElegance.ttf",
         30,
-        halfW, halfH+100,
+        halfW, halfH+105,
         0, 0, 0, 255, 0.5, 0.5
     );
 }

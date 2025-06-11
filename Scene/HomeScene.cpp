@@ -16,8 +16,8 @@ void HomeScene::Initialize() {
     Engine::ImageButton *btn;
     AddNewObject(new Engine::Image("stage-select/background.png", 0, 0, w, h));
     AddNewObject(new Engine::Label("FINAL TANK", "PixelatedElegance.ttf", 120, 
-        halfW, halfH / 3 + 60, 
-        173, 136, 55, 255,      // r g b a
+        halfW, halfH / 3 + 80, 
+        110, 105, 59, 255,      // r g b a
         0.5, 0.5));
 
     btn = new Engine::ImageButton("stage-select/button.png", "stage-select/buttonOn.png", halfW - 200, halfH / 2 + 250, 400, 100);
