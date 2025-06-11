@@ -192,6 +192,24 @@ void PlayScene::Draw() const {
         backButton->Draw();
         backButtonLabel->Draw();
     }
+    if (playerTank) {
+        Engine::Point tankPos = playerTank->Position;
+        Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
+        const float dotSpacing = 20.0f;
+        const float dotRadius = 4.0f;
+        ALLEGRO_COLOR color = al_map_rgba(100, 100, 100, 150);    // color of the line
+
+        float dx = mouse.x - tankPos.x;
+        float dy = mouse.y - tankPos.y;
+        float dist = sqrt(dx * dx + dy * dy);
+        float steps = dist / dotSpacing;
+        for(int i = 0; i < steps; ++i){
+            float t = i / steps;
+            float x = tankPos.x + dx * t;
+            float y = tankPos.y + dy * t;
+            al_draw_filled_circle(x, y, dotRadius, color);
+        }
+    }
 }
 
 void PlayScene::OnKeyDown(int keyCode) {
