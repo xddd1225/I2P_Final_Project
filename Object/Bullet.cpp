@@ -5,6 +5,7 @@
 #include "Engine/GameEngine.hpp"
 #include "Scene/PlayScene.hpp"
 #include <iostream>
+using namespace std;
 
 PlayScene* Bullet::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -21,7 +22,6 @@ Bullet::Bullet(float x, float y, float targetX, float targetY, std::vector<std::
     float dy = targetY - y;
     float length = sqrt(dx * dx + dy * dy);
     Velocity = Engine::Point(dx / length, dy / length);
-    
     // Set rotation to face the target
     Rotation = atan2(dy, dx) - ALLEGRO_PI / 2;
 }
@@ -36,6 +36,42 @@ void Bullet::Update(float deltaTime) {
     } else {
         Position = nextPos;
     }
+}
+
+vector<int> Bullet::SimulateUpdate(float deltaTime) {
+    Engine::Point nextPos = Position + Velocity * Speed * deltaTime;
+    vector<int> out = {false,false,false};
+    float hitboxShrink = 0.1f;
+    Engine::Point hitboxSize = Size * hitboxShrink;
+    Engine::Point nextMin = nextPos - hitboxSize / 2;
+    Engine::Point nextMax = nextPos + hitboxSize / 2;
+    // Check map boundaries
+    if (nextMin.x < 0 || nextMin.y < 0 || nextMax.x > mapWidth * 64 || nextMax.y > mapHeight * 64) {
+        return out;
+    }
+    // Check wall collisions
+    for (int y = 0; y < mapHeight; ++y) {
+        for (int x = 0; x < mapWidth; ++x) {
+            if ((*mapState)[y][x] == PlayScene::TILE_WALL) {
+                Engine::Point wallMin(x * 64, y * 64);
+                Engine::Point wallMax = wallMin + Engine::Point(64, 64);
+                if (Engine::Collider::IsRectOverlap(nextMin, nextMax, wallMin, wallMax)) {
+                    out[0] = true;
+                }
+            }
+        }
+    }
+    PlayScene* scene = getPlayScene();
+    Engine::Point aitarget = scene->aiTank->Position;
+    Engine::Point playertarget = scene->playerTank->Position;
+    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+        out[1]=true;
+    }
+    if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+        out[2]=true;
+    }
+    simDestroy = out[0]||out[1]||out[2];
+    return out;
 }
 
 bool Bullet::CheckCollision(Engine::Point nextPos) {
