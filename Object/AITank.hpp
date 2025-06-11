@@ -33,10 +33,13 @@ public:
     std::map<int, bool> pressedKey;
     int mapWidth, mapHeight;
     Engine::Point Velocity;
+    float moodTimer;
     float Speed;
+    bool shoot;
     float shootCooldown = 0;
     int maxlife, life;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
+    bool aggressive = false; // 預設為非侵略模式
     
     bool CheckCollision(Engine::Point nextPos);
     void extractState(PlayScene* scene);

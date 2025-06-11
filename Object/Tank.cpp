@@ -16,7 +16,7 @@ Tank::Tank(float x, float y, std::vector<std::vector<int>>* mapState, int mapWid
     Speed = 300;
     Size.x = 64;
     Size.y = 64;
-    maxlife = life = 3;
+    maxlife = life = 5;
     Velocity = Engine::Point(0, 0);
 }
 
@@ -34,9 +34,40 @@ Tank::Tank(const Tank& other)
 }
 
 void Tank::Update(float deltaTime) {
-    if(getPlayScene()->isGameOver) return;
-    Velocity = Velocity.Normalize();
-    Engine::Point fullMove = Velocity * Speed * deltaTime;
+    if (getPlayScene()->isGameOver) return;
+
+    // 更新衝刺狀態
+    if (isDashing) {
+        dashTimer -= deltaTime;
+        if (dashTimer <= 0) {
+            isDashing = false;
+            dashCooldownTimer = dashCooldown;
+        }
+    } else if (dashCooldownTimer > 0) {
+        dashCooldownTimer -= deltaTime;
+    }
+    float accel = AccelerationSpeed * deltaTime;
+    float friction = 5.0f * deltaTime;
+    float speedMultiplier = isDashing ? 2.5f : 1.0f;  // 衝刺加速
+
+    // X 軸處理
+    if (std::abs(TargetVelocity.x) > 0.01f) {
+        Velocity.x += (TargetVelocity.x - Velocity.x) * std::min(1.0f, accel);
+    } else {
+        if (std::abs(Velocity.x) < friction) Velocity.x = 0;
+        else Velocity.x -= std::copysign(friction, Velocity.x);
+    }
+
+    // Y 軸處理
+    if (std::abs(TargetVelocity.y) > 0.01f) {
+        Velocity.y += (TargetVelocity.y - Velocity.y) * std::min(1.0f, accel);
+    } else {
+        if (std::abs(Velocity.y) < friction) Velocity.y = 0;
+        else Velocity.y -= std::copysign(friction, Velocity.y);
+    }
+
+    Engine::Point normVel = Velocity.Normalize();
+    Engine::Point fullMove = normVel * Speed * deltaTime * speedMultiplier;
     Engine::Point nextPos = Position + fullMove;
 
     if (!CheckCollision(nextPos)) {
@@ -116,58 +147,70 @@ void Tank::OnKeyDown(int keyCode) {
     pressedKey[keyCode] = true;
     switch (keyCode) {
     case ALLEGRO_KEY_W:
-        Velocity.y = -1;
+        TargetVelocity.y = -1;
         break;
     case ALLEGRO_KEY_S:
-        Velocity.y = 1;
+        TargetVelocity.y = 1;
         break;
     case ALLEGRO_KEY_A:
-        Velocity.x = -1;
+        TargetVelocity.x = -1;
         break;
     case ALLEGRO_KEY_D:
-        Velocity.x = 1;
+        TargetVelocity.x = 1;
         break;
-    case ALLEGRO_KEY_SPACE:
+    case ALLEGRO_KEY_SPACE: {
+        if (!isDashing && dashCooldownTimer <= 0 && (Velocity.x != 0 || Velocity.y != 0)) {
+            isDashing = true;
+            dashTimer = dashDuration;
+        }
         break;
     }
-    if (Velocity.x!=0&&Velocity.y!=0){
-        Velocity.x = (Velocity.x>0?1:-1)*sqrt(2)/2;
-        Velocity.y = (Velocity.y>0?1:-1)*sqrt(2)/2;
     }
-    if (Velocity.x != 0 || Velocity.y != 0) {
-        Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
+
+    if (TargetVelocity.x != 0 && TargetVelocity.y != 0) {
+        TargetVelocity.x = (TargetVelocity.x > 0 ? 1 : -1) * std::sqrt(2) / 2;
+        TargetVelocity.y = (TargetVelocity.y > 0 ? 1 : -1) * std::sqrt(2) / 2;
+    }
+
+    if (TargetVelocity.x != 0 || TargetVelocity.y != 0) {
+        Engine::Point norm = TargetVelocity.Normalize();
+        Rotation = atan2(norm.y, norm.x) - ALLEGRO_PI / 2;
     }
 }
 
 void Tank::OnKeyUp(int keyCode) {
     pressedKey[keyCode] = false;
     switch (keyCode) {
-    case ALLEGRO_KEY_W: {
-        Velocity.y = 0;
+    case ALLEGRO_KEY_W:
         if (pressedKey[ALLEGRO_KEY_S])
-            Velocity.y=1;
+            TargetVelocity.y = 1;
+        else
+            TargetVelocity.y = 0;
         break;
-        }
-    case ALLEGRO_KEY_S:{
-        Velocity.y = 0;
+    case ALLEGRO_KEY_S:
         if (pressedKey[ALLEGRO_KEY_W])
-            Velocity.y=-1;
+            TargetVelocity.y = -1;
+        else
+            TargetVelocity.y = 0;
         break;
-    }
-    case ALLEGRO_KEY_A:{
-        Velocity.x = 0;
+    case ALLEGRO_KEY_A:
         if (pressedKey[ALLEGRO_KEY_D])
-            Velocity.x=1;
+            TargetVelocity.x = 1;
+        else
+            TargetVelocity.x = 0;
         break;
-    }
-    case ALLEGRO_KEY_D:{
-        Velocity.x = 0;
+    case ALLEGRO_KEY_D:
         if (pressedKey[ALLEGRO_KEY_A])
-            Velocity.x=-1;
+            TargetVelocity.x = -1;
+        else
+            TargetVelocity.x = 0;
         break;
     }
+    // 更新旋轉角度
+    if (TargetVelocity.x != 0 || TargetVelocity.y != 0) {
+        Engine::Point norm = TargetVelocity.Normalize();
+        Rotation = atan2(norm.y, norm.x) - ALLEGRO_PI / 2;
     }
-    Rotation = atan2(Velocity.y, Velocity.x) - ALLEGRO_PI / 2;
 }
 
 void Tank::hurt(int damage) {

@@ -15,7 +15,6 @@ public:
 
 // Define direction vectors
 const std::vector<Engine::Point> DirectionVectors = {
-    // Engine::Point(0, 0),    // None
     Engine::Point(0, -1),   // Up
     Engine::Point(0, 1),    // Down
     Engine::Point(-1, 0),   // Left
@@ -31,8 +30,7 @@ const std::vector<Action> AllActions = []() {
     std::vector<Action> actions;
     for (const Engine::Point& dir : DirectionVectors) {
         Engine::Point normalized = dir.Normalize();
-        actions.emplace_back(normalized, false);  // Move without shooting
-        actions.emplace_back(normalized, true);   // Move with shooting
+        actions.emplace_back(normalized, false);   // Move with shooting
     }
     return actions;
 }();

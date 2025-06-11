@@ -29,6 +29,7 @@ AITank::AITank(const AITank& other)
     mapWidth = other.mapWidth;
     mapHeight = other.mapHeight;
     Speed = other.Speed;
+    aggressive = other.aggressive;
     Size = other.Size;
     life = other.life;
     Velocity = other.Velocity;
@@ -37,23 +38,44 @@ AITank::AITank(const AITank& other)
 
 void AITank::ApplyAction(const Action& act){
     Velocity = act.direction.Normalize();
+    shoot = act.shoot;
 }
 
 void AITank::Strategy() {
     // Position.x
+    Engine::Point playerPos = getPlayScene()->playerTank->Position;
+    float dist = (playerPos - Position).Magnitude();
+
+    // 切換模式（你可以根據更複雜的策略切換）
     State snapshot = State(getPlayScene());
-    MonteCarloAI ai(15, 0.5f, 30);
+    MonteCarloAI ai(15, 0.3f, 30);
     Action best = ai.DecideBestAction(snapshot);
     ApplyAction(best);
 }
 
 void AITank::Update(float deltaTime) {
+    
+    // aggresive mode
+    moodTimer += deltaTime;
+    if (moodTimer > 3.0f) {
+        moodTimer = 0;
+        if (rand() % 2 == 0) {
+            aggressive = true;
+        } else {
+            aggressive = false;
+        }
+    }
+
     PropertyChange(deltaTime);
     PlayScene* scene = getPlayScene();
-    if(scene->isGameOver) return;
+    if (scene->isGameOver) return;
+
     int targetX = scene->playerTank->Position.x;
     int targetY = scene->playerTank->Position.y;
-    Shoot(targetX, targetY);
+    if (shoot) {
+        Shoot(targetX, targetY);
+        shoot = false;
+    }
 }
 
 void AITank::PropertyChange(float deltaTime){
