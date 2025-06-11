@@ -38,29 +38,50 @@ AITank::AITank(float x, float y, std::vector<std::vector<int>>* mapState, int ma
 
 void AITank::ApplyAction(const Action& act){
     Velocity = act.direction.Normalize();
+    shoot = act.shoot;
 }
 
 void AITank::Strategy() {
     // Position.x
+    Engine::Point playerPos = getPlayScene()->playerTank->Position;
+    float dist = (playerPos - Position).Magnitude();
+
+    // 切換模式（你可以根據更複雜的策略切換）
     State snapshot = State(getPlayScene());
-    MonteCarloAI ai(15, 0.5f, 30);
+    MonteCarloAI ai(15, 0.3f, 30);
     Action best = ai.DecideBestAction(snapshot);
     ApplyAction(best);
 }
 
 void AITank::Update(float deltaTime) {
+    
+    // aggresive mode
+    moodTimer += deltaTime;
+    if (moodTimer > 3.0f) {
+        moodTimer = 0;
+        if (rand() % 2 == 0) {
+            aggressive = true;
+        } else {
+            aggressive = false;
+        }
+    }
+
     PropertyChange(deltaTime);
     PlayScene* scene = getPlayScene();
-    if(scene->isGameOver) return;
+    if (scene->isGameOver) return;
+
     int targetX = scene->playerTank->Position.x;
     int targetY = scene->playerTank->Position.y;
-    Shoot(targetX, targetY);
+    if (shoot) {
+        Shoot(targetX, targetY);
 
     headRotation = atan2(targetY - Position.y, targetX - Position.x) - ALLEGRO_PI / 2;
     head.Rotation = headRotation;
     head.Position = Position;
     head.Size = Size;
     head.Update(deltaTime);
+        shoot = false;
+    }
 }
 
 void AITank::PropertyChange(float deltaTime){
@@ -146,7 +167,7 @@ void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
         PlayScene* scene = getPlayScene();
-        scene->RemoveObject(objectIterator);
+        // scene->RemoveObject(objectIterator);
         scene->showGameOverDialog("You Win!");
     }
 }

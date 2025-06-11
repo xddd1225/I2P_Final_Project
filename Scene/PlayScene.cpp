@@ -27,6 +27,11 @@ void PlayScene::Initialize() {
     for (int y = 0; y < 3; ++y)
         for (int x = 0; x < 3; ++x)
             mapState[y][x] = TILE_FLOOR;
+    
+    
+    for (int y = 1; y <= 3; ++y)
+        for (int x = 1; x <= 3; ++x)
+            mapState[MapHeight - y][MapWidth - x] = TILE_FLOOR;
 
     GroundGroup = new Group();
     WallGroup = new Group();
@@ -50,7 +55,7 @@ void PlayScene::Initialize() {
     }
 
     playerTank = new Tank(100, 100, &mapState, MapWidth, MapHeight);
-    aiTank = new AITank(620, 560, &mapState, MapWidth, MapHeight);
+    aiTank = new AITank(1450, 760, &mapState, MapWidth, MapHeight);
     TankGroup->AddNewObject(playerTank);
     TankGroup->AddNewObject(aiTank);
 }
@@ -136,6 +141,7 @@ void PlayScene::GenerateMaze() {
         for (int x = 1; x < MapWidth - 1; ++x)
             if (mapState[y][x] == TILE_WALL && rand() % 10 == 0)
                 mapState[y][x] = TILE_FLOOR;
+    mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
 }
 
 void PlayScene::Terminate() {

@@ -33,6 +33,14 @@ private:
     float shootCooldown = 0;
     int life, maxlife;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
+    Engine::Point TargetVelocity = Engine::Point(0, 0);
+    float AccelerationSpeed = 5.0f;
+
+    bool isDashing = false;
+    float dashDuration = 0.16f;       // 衝刺持續時間（秒）
+    float dashCooldown = 0.3f;       // 衝刺冷卻時間（秒）
+    float dashTimer = 0.0f;          // 當前衝刺剩餘時間
+    float dashCooldownTimer = 0.0f;  // 冷卻時間計時器
     
     bool CheckCollision(Engine::Point nextPos);
     void Draw() const override;

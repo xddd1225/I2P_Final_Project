@@ -31,6 +31,8 @@ public:
     void ApplyAction(const Action& act);
     void Simulate(float deltaTime);
     float EvaluateScore() const;
+    // float DFSdodge() const;
+    bool CheckShoot() const;
     bool IsTerminal() const;
     void Step(float dt);
     enum TileType {
@@ -48,6 +50,7 @@ public:
     int MapHeight;
     int MapWidth;
     int hitCount;
+    float moodTimer = 0.0f;
 };
 
 
@@ -64,10 +67,13 @@ public:
 private:
     float SimulateRollout(const State& initial, const Action& act); // 跑一次模擬
     vector<Action> GetAllActions(); // 產生 80 組合法行為
+    void DFSPathSearch(const State& current, vector<Action>& path,
+                                 int depth, float& bestScore, Action& bestAction);
 
 private:
     int numRollouts;
     float deltaTime;
     int rolloutSteps;
+    float moodTimer = 0.0f;
 };
 #endif // AISTRATEGY_HPP
