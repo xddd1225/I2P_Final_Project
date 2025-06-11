@@ -33,6 +33,8 @@ private:
     float shootCooldown = 0;
     int life, maxlife;
     const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
+    Engine::Point TargetVelocity = Engine::Point(0, 0);
+    float AccelerationSpeed = 5.0f;
     
     bool CheckCollision(Engine::Point nextPos);
     void Draw() const override;
