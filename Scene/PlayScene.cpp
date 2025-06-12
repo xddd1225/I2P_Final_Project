@@ -192,7 +192,7 @@ void PlayScene::Draw() const {
         backButton->Draw();
         backButtonLabel->Draw();
     }
-    if (playerTank) {
+    else if (playerTank) {
         Engine::Point tankPos = playerTank->Position;
         Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
         const float dotSpacing = 20.0f;
