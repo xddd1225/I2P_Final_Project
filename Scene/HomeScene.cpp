@@ -29,6 +29,10 @@ void HomeScene::Initialize() {
     btn->SetOnClickCallback([]() {Engine::GameEngine::GetInstance().ChangeScene("history");});
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("History", "PixelatedElegance.ttf", 48, halfW, halfH / 2 + 425, 0, 0, 0, 255, 0.5, 0.5));
+    if(!isPlayingBGM){
+        bgmId = AudioHelper::PlayBGM("BF2Theme.wav");
+        isPlayingBGM = true;
+    }
 }
 
 void HomeScene::Terminate() {

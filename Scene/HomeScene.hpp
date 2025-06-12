@@ -10,6 +10,9 @@ public:
     void Initialize() override;
     void Terminate() override;
     void PlayOnClick(int stage);
+
+    ALLEGRO_SAMPLE_ID bgmId;
+    bool isPlayingBGM = false;
 };
 
 #endif

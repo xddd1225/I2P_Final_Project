@@ -5,6 +5,7 @@
 #include "Engine/Point.hpp"
 #include "UI/Component/ImageButton.hpp"
 #include "UI/Component/Label.hpp"
+#include "Engine/AudioHelper.hpp"
 
 void StageSelectScene::Initialize() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
@@ -40,6 +41,12 @@ void StageSelectScene::Terminate() {
 }
 
 void StageSelectScene::StageOnClick(int stage) {
+    HomeScene *homeScene = dynamic_cast<HomeScene *>(Engine::GameEngine::GetInstance().GetScene("home"));
+    // stop menu BGM when entering playscene
+    if (homeScene) {
+        AudioHelper::StopBGM(homeScene->bgmId);
+        homeScene->isPlayingBGM = false;
+    }
     PlayScene *scene = dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetScene("play"));
     scene->stageID = stage;
     Engine::GameEngine::GetInstance().ChangeScene("play");
