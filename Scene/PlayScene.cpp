@@ -65,7 +65,7 @@ void PlayScene::Initialize() {
     aiTank = new AITank(1450, 760, &mapState, MapWidth, MapHeight);
     TankGroup->AddNewObject(playerTank);
     TankGroup->AddNewObject(aiTank);
-    bgmId = AudioHelper::PlayBGM("playBgm.ogg");
+    bgmId = AudioHelper::PlayBGM("ingamebgm.ogg");
 }
 
 void PlayScene::LoadFixedMap() {
@@ -243,6 +243,12 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
 
 void PlayScene::showGameOverDialog(const std::string& message){
     AudioHelper::StopBGM(bgmId);
+    if(message == "You Win!"){
+        bgmId = AudioHelper::PlayAudio("respect.ogg");
+    }
+    else{
+        //
+    }
     std::string winner;
     if(message.find("Win") != std::string::npos){
         winner = "You";
