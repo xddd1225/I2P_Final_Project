@@ -23,6 +23,8 @@ public:
         TILE_WALL,
     };
 
+    ALLEGRO_SAMPLE_ID bgmId;
+
     Group* GroundGroup;
     Group* WallGroup;
     Group* TankGroup;
