@@ -88,10 +88,19 @@ void Tank::Update(float deltaTime) {
     if (shootCooldown > 0) {
         shootCooldown -= deltaTime;
     }
+
+    // tank barrel rotation
     Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
     headRotation = atan2(mouse.y - Position.y, mouse.x - Position.x) - ALLEGRO_PI / 2;
     head.Rotation = headRotation;
-    head.Position = Position;
+    // tank barrel is slightly misaligned by default
+    float localOffsetX = 2.0f; // left
+    float localOffsetY = 10.0f;  // down
+    float cosR = std::cos(headRotation);
+    float sinR = std::sin(headRotation);
+    float offsetX = localOffsetX * cosR - localOffsetY * sinR;
+    float offsetY = localOffsetX * sinR + localOffsetY * cosR;
+    head.Position = Position + Engine::Point(offsetX, offsetY);
     head.Size = Size;
     head.Update(deltaTime);
 }

@@ -88,7 +88,14 @@ void AITank::Update(float deltaTime) {
         }
         headRotation = atan2(targetY - Position.y, targetX - Position.x) - ALLEGRO_PI / 2;
         head.Rotation = headRotation;
-        head.Position = Position;
+
+        float localOffsetX = 2.0f; // left
+        float localOffsetY = 10.0f;  // down
+        float cosR = std::cos(headRotation);
+        float sinR = std::sin(headRotation);
+        float offsetX = localOffsetX * cosR - localOffsetY * sinR;
+        float offsetY = localOffsetX * sinR + localOffsetY * cosR;
+        head.Position = Position + Engine::Point(offsetX, offsetY);
         head.Size = Size;
         head.Update(deltaTime);
     }
