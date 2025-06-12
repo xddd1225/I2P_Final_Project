@@ -72,12 +72,21 @@ void Bullet::Update(float deltaTime) {
     }
 
     // 檢查擊中目標
-    Engine::Point aitarget = scene->aiTank->Position;
-    Engine::Point playertarget = scene->playerTank->Position;
-    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+    // !! this will cause seg fault !!
+
+    // Engine::Point aitarget = scene->aiTank->Position;
+    // Engine::Point playertarget = scene->playerTank->Position;
+
+    // !! this will cause seg fault !!
+    if (scene->aiTank
+    && target==0
+    && Engine::Collider::IsCircleOverlap(nextPos, 0, scene->aiTank->Position, 24)) {
         scene->aiTank->hurt(1);
         scene->RemoveObject(objectIterator);
-    } else if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+    }
+    else if (scene->playerTank
+    && target==1
+    && Engine::Collider::IsCircleOverlap(nextPos, 0, scene->playerTank->Position, 24)) {
         scene->playerTank->hurt(1);
         scene->RemoveObject(objectIterator);
     } else {
@@ -109,13 +118,22 @@ vector<int> Bullet::SimulateUpdate(float deltaTime) {
         }
     }
     PlayScene* scene = getPlayScene();
-    Engine::Point aitarget = scene->aiTank->Position;
-    Engine::Point playertarget = scene->playerTank->Position;
-    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
-        out[1]=true;
+    // Engine::Point aitarget = scene->aiTank->Position;
+    // Engine::Point playertarget = scene->playerTank->Position;
+    if(scene->aiTank){
+        Engine::Point aitarget = scene->aiTank->Position;
+        if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+            out[1]=true;
+        }
+        if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+            out[1]=true;
+        }
     }
-    if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
-        out[2]=true;
+    if(scene->playerTank){
+        Engine::Point playertarget = scene->playerTank->Position;
+        if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+            out[2]=true;
+        }
     }
     simDestroy = out[0]||out[1]||out[2];
     return out;
@@ -146,13 +164,17 @@ bool Bullet::CheckCollision(Engine::Point nextPos) {
     }
     // Check tank collision
     PlayScene* scene = getPlayScene();
-    Engine::Point aitarget = scene->aiTank->Position;
-    Engine::Point playertarget = scene->playerTank->Position;
-    if (target==0 && Engine::Collider::IsCircleOverlap(nextPos, 0, aitarget, 24)) {
+    // Engine::Point aitarget = scene->aiTank->Position;
+    // Engine::Point playertarget = scene->playerTank->Position;
+    if (scene->aiTank
+    && target==0
+    && Engine::Collider::IsCircleOverlap(nextPos, 0, scene->aiTank->Position, 24)) {
         scene->aiTank->hurt(1);
         return true;
     }
-    if (target==1 && Engine::Collider::IsCircleOverlap(nextPos, 0, playertarget, 24)) {
+    if (scene->playerTank
+    && target==1
+    && Engine::Collider::IsCircleOverlap(nextPos, 0, scene->playerTank->Position, 24)) {
         scene->playerTank->hurt(1);
         return true;
     }

@@ -188,7 +188,7 @@ void PlayScene::Update(float deltaTime) {
         }
         return;
     }
-    aiTank->Strategy();
+    if(aiTank) aiTank->Strategy();
     IScene::Update(deltaTime);
 }
 

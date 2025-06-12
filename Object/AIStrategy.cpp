@@ -14,8 +14,8 @@
 
 State::State(PlayScene* scene) {
     mapState = scene->mapState;
-    ai = new AITank(*scene->aiTank);
-    player = new Tank(*scene->playerTank);
+    if(scene->aiTank) ai = new AITank(*scene->aiTank);
+    if(scene->playerTank) player = new Tank(*scene->playerTank);
     BlockSize = scene->BlockSize;
     MapHeight = scene->MapHeight;
     MapWidth = scene->MapWidth;
