@@ -44,7 +44,8 @@ void StageSelectScene::StageOnClick(int stage) {
     HomeScene *homeScene = dynamic_cast<HomeScene *>(Engine::GameEngine::GetInstance().GetScene("home"));
     // stop menu BGM when entering playscene
     if (homeScene) {
-        AudioHelper::StopBGM(homeScene->bgmId);
+        // AudioHelper::StopBGM(homeScene->bgmId);
+        AudioHelper::StopSample(homeScene->bgmInstance);
         homeScene->isPlayingBGM = false;
     }
     PlayScene *scene = dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetScene("play"));
