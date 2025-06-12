@@ -152,27 +152,28 @@ bool Tank::CheckCollision(Engine::Point nextPos) {
 }
 
 void Tank::OnKeyDown(int keyCode) {
+    if (getPlayScene()->isGameOver) return;
     pressedKey[keyCode] = true;
     switch (keyCode) {
-    case ALLEGRO_KEY_W:
-        TargetVelocity.y = -1;
-        break;
-    case ALLEGRO_KEY_S:
-        TargetVelocity.y = 1;
-        break;
-    case ALLEGRO_KEY_A:
-        TargetVelocity.x = -1;
-        break;
-    case ALLEGRO_KEY_D:
-        TargetVelocity.x = 1;
-        break;
-    case ALLEGRO_KEY_SPACE: {
-        if (!isDashing && dashCooldownTimer <= 0 && (Velocity.x != 0 || Velocity.y != 0)) {
-            isDashing = true;
-            dashTimer = dashDuration;
+        case ALLEGRO_KEY_W:
+            TargetVelocity.y = -1;
+            break;
+        case ALLEGRO_KEY_S:
+            TargetVelocity.y = 1;
+            break;
+        case ALLEGRO_KEY_A:
+            TargetVelocity.x = -1;
+            break;
+        case ALLEGRO_KEY_D:
+            TargetVelocity.x = 1;
+            break;
+        case ALLEGRO_KEY_SPACE: {
+            if (!isDashing && dashCooldownTimer <= 0 && (Velocity.x != 0 || Velocity.y != 0)) {
+                isDashing = true;
+                dashTimer = dashDuration;
+            }
+            break;
         }
-        break;
-    }
     }
 
     if (TargetVelocity.x != 0 && TargetVelocity.y != 0) {

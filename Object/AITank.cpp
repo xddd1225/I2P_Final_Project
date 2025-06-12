@@ -54,6 +54,7 @@ void AITank::Strategy() {
 }
 
 void AITank::Update(float deltaTime) {
+    if (getPlayScene()->isGameOver) return;
     
     // aggresive mode
     moodTimer += deltaTime;
@@ -167,7 +168,8 @@ void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
         PlayScene* scene = getPlayScene();
-        // scene->RemoveObject(objectIterator);
+        scene->RemoveObject(objectIterator);
+        scene->aiTank = nullptr;
         scene->showGameOverDialog("You Win!");
     }
 }
