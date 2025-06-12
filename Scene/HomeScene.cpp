@@ -70,11 +70,11 @@ void HomeScene::SettingOnClick() {
     AddNewObject(settingBox);
 
     // title
-    settingTitle = new Engine::Label("Volume Setting", "PixelatedElegance.ttf", 32, w/2, boxY + 50, 255, 255, 255, 255, 0.5, 0.5);
+    settingTitle = new Engine::Label("Volume Setting", "PixelatedElegance.ttf", 32, w/2, boxY + 50, 0, 0, 0, 255, 0.5, 0.5);
     AddNewObject(settingTitle);
 
     // BGM slider
-    bgmLabel = new Engine::Label("BGM", "PixelatedElegance.ttf", 28, boxX + 100, boxY + 110, 255, 255, 255, 255, 0.5, 0.5);
+    bgmLabel = new Engine::Label("BGM", "PixelatedElegance.ttf", 28, boxX + 100, boxY + 110, 0, 0, 0, 255, 0.5, 0.5);
     AddNewObject(bgmLabel);
     bgmSlider = new Slider(boxX + 180, boxY + 95, 250, 30);
     bgmSlider->SetValue(AudioHelper::BGMVolume);
@@ -82,7 +82,7 @@ void HomeScene::SettingOnClick() {
     AddNewControlObject(bgmSlider);
 
     // SFX slider
-    sfxLabel = new Engine::Label("SFX", "PixelatedElegance.ttf", 28, boxX + 100, boxY + 190, 255, 255, 255, 255, 0.5, 0.5);
+    sfxLabel = new Engine::Label("SFX", "PixelatedElegance.ttf", 28, boxX + 100, boxY + 190, 0, 0, 0, 255, 0.5, 0.5);
     AddNewObject(sfxLabel);
     sfxSlider = new Slider(boxX + 180, boxY + 175, 250, 30);
     sfxSlider->SetValue(AudioHelper::SFXVolume);
