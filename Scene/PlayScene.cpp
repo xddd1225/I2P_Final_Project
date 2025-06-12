@@ -19,6 +19,7 @@
 #include "UI/Component/Label.hpp"
 
 #include "Object/Tank.hpp"
+#include "Object/Explosion.hpp"
 
 void PlayScene::Initialize() {
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -177,7 +178,14 @@ void PlayScene::Terminate() {
 }
 
 void PlayScene::Update(float deltaTime) {
-    if(isGameOver) return;
+    if(isGameOver){
+        for(auto &obj : TankGroup->GetObjects()){
+            if(dynamic_cast<Explosion*>(obj)){
+                obj->Update(deltaTime);
+            }
+        }
+        return;
+    }
     aiTank->Strategy();
     IScene::Update(deltaTime);
 }

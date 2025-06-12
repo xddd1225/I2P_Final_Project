@@ -50,7 +50,6 @@ public:
     void OnMouseDown(int button, int mx, int my) override;
     void showGameOverDialog(const std::string& message);
     void SaveGameResult(const std::string& winner);
-
 };
 
 #endif   // PLAYSCENE_HPP

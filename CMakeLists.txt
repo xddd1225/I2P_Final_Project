@@ -47,6 +47,8 @@ add_executable(Final_Project
     Object/Bullet.hpp
     Object/AIStrategy.cpp
     Object/AIStrategy.hpp
+    Object/Explosion.cpp
+    Object/Explosion.hpp
     
     Scene/PlayScene.cpp
     Scene/PlayScene.hpp

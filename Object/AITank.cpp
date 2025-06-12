@@ -1,12 +1,13 @@
 #include <allegro5/allegro.h>
 #include <cmath>
+#include <iostream>
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
 #include "AIStrategy.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Object/AITank.hpp"
 #include "Bullet.hpp"
-#include <iostream>
+#include "Explosion.hpp"
 
 PlayScene *AITank::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -168,6 +169,7 @@ void AITank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
         PlayScene* scene = getPlayScene();
+        scene->TankGroup->AddNewObject(new Explosion(Position.x, Position.y));
         scene->RemoveObject(objectIterator);
         scene->aiTank = nullptr;
         scene->showGameOverDialog("You Win!");

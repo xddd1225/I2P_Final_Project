@@ -1,11 +1,12 @@
 #include <allegro5/allegro.h>
 #include <cmath>
+#include <iostream>
 #include "Tank.hpp"
 #include "Engine/Collider.hpp"
 #include "Engine/GameEngine.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Bullet.hpp"
-#include <iostream>
+#include "Explosion.hpp"
 
 PlayScene *Tank::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -226,6 +227,7 @@ void Tank::hurt(int damage) {
     life -= damage;
     if (life <= 0){
         PlayScene* scene = getPlayScene();
+        scene->TankGroup->AddNewObject(new Explosion(Position.x, Position.y));
         scene->RemoveObject(objectIterator);
         scene->playerTank = nullptr;    // prevent crash (e.g., move tank after game over)
         scene->showGameOverDialog("You Lose!");
