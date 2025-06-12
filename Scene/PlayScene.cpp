@@ -243,7 +243,7 @@ void PlayScene::OnMouseDown(int button, int mx, int my) {
 
 void PlayScene::showGameOverDialog(const std::string& message){
     AudioHelper::StopBGM(bgmId);
-    bgmId = AudioHelper::PlayAudio((message == "You Win!") ? "respect.ogg" : "die.ogg");
+    bgmId = AudioHelper::PlayAudio((message == "You Win!") ? "respect.wav" : "die.ogg");
     std::string winner;
     if(message.find("Win") != std::string::npos){
         winner = "You";

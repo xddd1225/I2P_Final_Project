@@ -7,6 +7,7 @@
 #include "Scene/PlayScene.hpp"
 #include "Bullet.hpp"
 #include "Explosion.hpp"
+#include "Engine/AudioHelper.hpp"
 
 PlayScene *Tank::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -236,6 +237,7 @@ void Tank::hurt(int damage) {
 
 void Tank::Shoot(float targetX, float targetY) {
     if (shootCooldown <= 0) {
+        AudioHelper::PlayAudio("tankShot.wav");
         // Create a new bullet at the tank's position
         Bullet* bullet = new Bullet(Position.x, Position.y, targetX, targetY, mapState, mapWidth, mapHeight, 0);
         getPlayScene()->BulletGroup->AddNewObject(bullet);
