@@ -58,7 +58,7 @@ void PlayScene::Initialize() {
             if (mapState[y][x] == TILE_WALL) {
                 WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
             }else if (mapState[y][x] == TILE_BREAK_WALL){
-                WallGroup->AddNewObject(new Engine::Image("play/dirt.png", x * BlockSize, y * BlockSize));
+                WallGroup->AddNewObject(new Engine::Image("play/straw.png", x * BlockSize, y * BlockSize));
             }else{
                 GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
             }
@@ -197,7 +197,7 @@ void PlayScene::UpdateTileImage(int x, int y) {
             if (mapState[y][x] == TILE_WALL) {
                 WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
             } else if (mapState[y][x] == TILE_BREAK_WALL) {
-                WallGroup->AddNewObject(new Engine::Image("play/dirt.png", x * BlockSize, y * BlockSize));
+                WallGroup->AddNewObject(new Engine::Image("play/straw.png", x * BlockSize, y * BlockSize));
             } else {
                 GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
             }
