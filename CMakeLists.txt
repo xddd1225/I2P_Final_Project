@@ -49,6 +49,8 @@ add_executable(Final_Project
     Object/AIStrategy.hpp
     Object/Explosion.cpp
     Object/Explosion.hpp
+    Object/LandMine.cpp
+    Object/LandMine.hpp
     
     Scene/PlayScene.cpp
     Scene/PlayScene.hpp

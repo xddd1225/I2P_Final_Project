@@ -4,9 +4,11 @@
 #include <allegro5/allegro.h>
 #include <string>
 #include <vector>
+#include <cmath>
 #include <map>
 #include "Engine/Point.hpp"
 #include "Engine/Sprite.hpp"
+#include "Object/LandMine.hpp"
 #include <allegro5/allegro_primitives.h>
 
 
@@ -41,11 +43,14 @@ private:
     float dashCooldown = 0.3f;       // 衝刺冷卻時間（秒）
     float dashTimer = 0.0f;          // 當前衝刺剩餘時間
     float dashCooldownTimer = 0.0f;  // 冷卻時間計時器
+    float landMineCooldownTimer = 0.0f;
+    float landMineDuration = 1.0f;
     
     bool CheckCollision(Engine::Point nextPos);
     void Draw() const override;
     Sprite head;
     float headRotation = 0;
+    
 };
 
 #endif // TANK_HPP

@@ -82,7 +82,7 @@ bool State::CheckShoot() const {
         int gridY = static_cast<int>(cy / BlockSize);
         if (gridX < 0 || gridY < 0 || gridX >= MapWidth || gridY >= MapHeight)
             return false;
-        if (mapState[gridY][gridX] == PlayScene::TILE_WALL)
+        if (mapState[gridY][gridX] == PlayScene::TILE_WALL || mapState[gridY][gridX] == PlayScene::TILE_BREAK_WALL)
             return false;
     }
 
@@ -154,7 +154,9 @@ float State::EvaluateScore() const {
     std::vector<std::vector<int>> fineMap(H, std::vector<int>(W, 0));
     for (int y = 0; y < H; ++y) {
         for (int x = 0; x < W; ++x) {
-            if (mapState[y / SplitFactor][x / SplitFactor] == PlayScene::TILE_WALL) {
+            if (mapState[y / SplitFactor][x / SplitFactor] == PlayScene::TILE_WALL || 
+                mapState[y / SplitFactor][x / SplitFactor] == PlayScene::TILE_BREAK_WALL
+            ) {
                 fineMap[y][x] = 1;
             }
         }
