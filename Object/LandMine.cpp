@@ -9,7 +9,7 @@
 #include "Object/Explosion.hpp"
 
 LandMine::LandMine(float x, float y, float delayTime) :
-    Engine::Sprite("play/explosion-1.png", x, y), timer(delayTime), exploded(false) {
+    Engine::Sprite("play/landmine.png", x, y, 64, 28), timer(delayTime), exploded(false) {
     Anchor = Engine::Point(0.5f, 0.5f);
 }
 
@@ -34,7 +34,7 @@ void LandMine::Explode() {
     scene->TankGroup->AddNewObject(new Explosion(Position.x, Position.y));
     
     // Play explosion sound
-    AudioHelper::PlayAudio("explosion.wav");
+    AudioHelper::PlayAudio("landmine.wav");
     
     // Get map state
     auto& map = scene->mapState;
@@ -50,16 +50,23 @@ void LandMine::Explode() {
     float explosionRadius = radius * scene->BlockSize; // Convert to pixel radius
 
     // Check for tank damage
-    if (scene->playerTank) {
-        float dist = (scene->playerTank->Position - Position).Magnitude();
+    /* Note:
+        if there are multiple landmines and one of them kills a tank,
+        the other landmines will cause seg fault since the tank is null,
+        but landmine is calling hurt()
+    */
+   Tank *&player = scene->playerTank;
+   AITank *&ai = scene->aiTank;
+    if (player) {
+        float dist = (player->Position - Position).Magnitude();
         if (dist <= explosionRadius) {
-            scene->playerTank->hurt(1);
+            if(player) player->hurt(1); // check again
         }
     }
-    if (scene->aiTank) {
-        float dist = (scene->aiTank->Position - Position).Magnitude();
+    if (ai) {
+        float dist = (ai->Position - Position).Magnitude();
         if (dist <= explosionRadius) {
-            scene->aiTank->hurt(1);
+            if(ai) ai->hurt(1); // check again
         }
     }
 

@@ -267,7 +267,7 @@ void PlayScene::OnKeyUp(int keyCode) {
 
 void PlayScene::OnMouseDown(int button, int mx, int my) {
     IScene::OnMouseDown(button, mx, my);
-    if (button == 1 && playerTank) { // Left mouse button
+    if (button == 1 && !isGameOver && playerTank) { // Left mouse button
         playerTank->Shoot(mx, my);
     }
 }
