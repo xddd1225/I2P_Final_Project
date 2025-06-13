@@ -44,17 +44,21 @@ void PlayScene::Initialize() {
     WallGroup = new Group();
     TankGroup = new Group();
     BulletGroup = new Group();
+    GroundEffectGroup = new Group();
 
     AddNewObject(GroundGroup);
     AddNewObject(WallGroup);
     AddNewObject(TankGroup);
     AddNewObject(BulletGroup);
+    AddNewObject(GroundEffectGroup);
 
     for (int y = 0; y < MapHeight; ++y) {
         for (int x = 0; x < MapWidth; ++x) {
 
             if (mapState[y][x] == TILE_WALL) {
                 WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
+            }else if (mapState[y][x] == TILE_BREAK_WALL){
+                WallGroup->AddNewObject(new Engine::Image("play/dirt.png", x * BlockSize, y * BlockSize));
             }else{
                 GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
             }
@@ -169,9 +173,36 @@ void PlayScene::GenerateMaze() {
 
     for (int y = 1; y < MapHeight - 1; ++y)
         for (int x = 1; x < MapWidth - 1; ++x)
-            if (mapState[y][x] == TILE_WALL && rand() % 10 == 0)
-                mapState[y][x] = TILE_FLOOR;
+            if (mapState[y][x] == TILE_WALL){
+                int randint = rand()%10;
+                if (randint <= 1){
+                    mapState[y][x] = TILE_FLOOR;
+                }else if (randint <= 3) {
+                    mapState[y][x] = TILE_BREAK_WALL;
+                }
+            }
+                
     // mapState = std::vector<std::vector<int>>(MapHeight, std::vector<int>(MapWidth, TILE_FLOOR));
+}
+
+
+void PlayScene::UpdateTileImage(int x, int y) {
+    // Clear all tiles and rebuild them
+    WallGroup->Clear();
+    GroundGroup->Clear();
+    
+    // Rebuild all tiles
+    for (int y = 0; y < MapHeight; ++y) {
+        for (int x = 0; x < MapWidth; ++x) {
+            if (mapState[y][x] == TILE_WALL) {
+                WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
+            } else if (mapState[y][x] == TILE_BREAK_WALL) {
+                WallGroup->AddNewObject(new Engine::Image("play/dirt.png", x * BlockSize, y * BlockSize));
+            } else {
+                GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
+            }
+        }
+    }
 }
 
 void PlayScene::Terminate() {

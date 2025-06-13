@@ -1,5 +1,4 @@
 #include <allegro5/allegro.h>
-#include <cmath>
 #include <iostream>
 #include "Tank.hpp"
 #include "Engine/Collider.hpp"
@@ -48,6 +47,9 @@ void Tank::Update(float deltaTime) {
         }
     } else if (dashCooldownTimer > 0) {
         dashCooldownTimer -= deltaTime;
+    }
+    if (landMineCooldownTimer > 0){
+        landMineCooldownTimer -= deltaTime;
     }
     float accel = AccelerationSpeed * deltaTime;
     float friction = 5.0f * deltaTime;
@@ -149,7 +151,7 @@ bool Tank::CheckCollision(Engine::Point nextPos) {
 
     for (int y = 0; y < mapHeight; ++y) {
         for (int x = 0; x < mapWidth; ++x) {
-            if ((*mapState)[y][x] == PlayScene::TILE_WALL) {
+            if ((*mapState)[y][x] == PlayScene::TILE_WALL || (*mapState)[y][x] == PlayScene::TILE_BREAK_WALL) {
                 Engine::Point wallMin(x * 64, y * 64);
                 Engine::Point wallMax = wallMin + Engine::Point(64, 64);
                 if (Engine::Collider::IsRectOverlap(nextMin, nextMax, wallMin, wallMax)) {
@@ -182,6 +184,18 @@ void Tank::OnKeyDown(int keyCode) {
             if (!isDashing && dashCooldownTimer <= 0 && (Velocity.x != 0 || Velocity.y != 0)) {
                 isDashing = true;
                 dashTimer = dashDuration;
+            }
+            break;
+        }
+        case ALLEGRO_KEY_E: {
+            if (landMineCooldownTimer <= 0) {
+                landMineCooldownTimer = landMineDuration;
+                // 取得玩家位置
+                float x = Position.x;
+                float y = Position.y;
+                // 建立地雷，爆炸延遲 3 秒
+                LandMine* mine = new LandMine(x, y, 3.0);
+                getPlayScene()->GroundEffectGroup->AddNewObject(mine);
             }
             break;
         }

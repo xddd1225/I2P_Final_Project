@@ -42,7 +42,7 @@ void Bullet::Update(float deltaTime) {
     // 檢查牆壁反彈
     for (int y = 0; y < mapHeight; ++y) {
         for (int x = 0; x < mapWidth; ++x) {
-            if ((*mapState)[y][x] == PlayScene::TILE_WALL) {
+            if ((*mapState)[y][x] == PlayScene::TILE_WALL || (*mapState)[y][x] == PlayScene::TILE_BREAK_WALL) {
                 Engine::Point wallMin(x * 64, y * 64);
                 Engine::Point wallMax = wallMin + Engine::Point(64, 64);
                 if (Engine::Collider::IsRectOverlap(nextMin, nextMax, wallMin, wallMax)) {

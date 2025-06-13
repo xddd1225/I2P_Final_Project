@@ -21,6 +21,7 @@ public:
     enum TileType {
         TILE_FLOOR,
         TILE_WALL,
+        TILE_BREAK_WALL
     };
 
     ALLEGRO_SAMPLE_ID bgmId;
@@ -29,6 +30,7 @@ public:
     Group* WallGroup;
     Group* TankGroup;
     Group* BulletGroup;
+    Group* GroundEffectGroup;
 
     std::vector<std::vector<int>> mapState;
     Tank* playerTank;
@@ -52,6 +54,7 @@ public:
     void OnMouseDown(int button, int mx, int my) override;
     void showGameOverDialog(const std::string& message);
     void SaveGameResult(const std::string& winner);
+    void UpdateTileImage(int x, int y);
 };
 
 #endif   // PLAYSCENE_HPP
