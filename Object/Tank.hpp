@@ -25,6 +25,11 @@ public:
     void hurt(int damage);
     PlayScene* getPlayScene();
 
+    // New methods for item effects
+    void IncreaseSpeed();
+    void IncreaseFireRate();
+    void Heal(int amount);
+
 private:
     friend class AIstrategy;
     std::vector<std::vector<int>>* mapState;
@@ -34,7 +39,7 @@ private:
     float Speed;
     float shootCooldown = 0;
     int life, maxlife;
-    const float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
+    float SHOOT_COOLDOWN_TIME = 0.5f; // Time between shots in seconds
     Engine::Point TargetVelocity = Engine::Point(0, 0);
     float AccelerationSpeed = 5.0f;
 

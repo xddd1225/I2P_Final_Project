@@ -12,6 +12,7 @@
 #include "Object/AITank.hpp"
 #include "UI/Component/Label.hpp"
 #include "UI/Component/ImageButton.hpp"
+#include "Object/Coin.hpp"
 
 class PlayScene final : public Engine::IScene {
 public:
@@ -32,6 +33,9 @@ public:
     Group* BulletGroup;
     Group* GroundEffectGroup;
 
+    Group* CoinGroup = nullptr;
+    int playerCoinCount = 0;
+
     std::vector<std::vector<int>> mapState;
     Tank* playerTank;
     AITank* aiTank;
@@ -41,6 +45,18 @@ public:
     Engine::ImageButton* backButton = nullptr;
     Engine::Label* backButtonLabel = nullptr;
     int stageID = 0;
+    bool isPaused = false;
+    Engine::Label* pauseText = nullptr;
+
+    // Item Buttons (New member variables)
+    Engine::ImageButton* itemButton1 = nullptr;
+    Engine::ImageButton* itemButton2 = nullptr;
+    Engine::ImageButton* itemButton3 = nullptr;
+    bool showItemButtons = false; // To control visibility
+
+    // Coin spawning variables
+    float coinSpawnTimer = 0.0f;
+    const float coinSpawnCooldown = 5.0f; // Spawn a coin every 5 seconds on average
 
     explicit PlayScene() = default;
     void Initialize() override;
