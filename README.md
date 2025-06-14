@@ -3,6 +3,17 @@
 > I2P(II) 2025 Final Project Team 38  
 > 組員：陶威綸、胡佳希、謝承軒
 
+## Features
+- [Easy]
+  - 隨機生成金幣以、商店購買道具
+  - 遊戲暫停按鍵
+  - Player移動邏輯（還啟動、撞牆改變方向等）
+  - 地雷引爆
+- [Hard]
+  - 隨機生成地圖
+  - 蒙地卡羅演算法AI
+  - 子彈反彈
+
 ## Description and Features
 
 *Final Tank* is a 2D tank battle game inspired by *Wii Play Tanks!*.  
@@ -16,8 +27,8 @@ The gameplay focuses on real-time strategy and shooting mechanics.
 
 ## Individual Contribution
 
-- **... 陶威綸** (x%)
-  - ...
+- **... 陶威綸** (40%)
+  - 子彈、地雷邏輯、商店、金幣、AI坦克、玩家移動優化
 - **112062171 胡佳希** (x%)
   - Game assets (buttons, map tiles, tank models, background images, font, game icon)
   - In-game mechanisms: tank barrel movement, player mouse aiming line, tank explosion animation
