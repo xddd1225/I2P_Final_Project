@@ -7,8 +7,15 @@
 
 *Final Tank* is a 2D tank battle game inspired by *Wii Play Tanks!*.  
 The gameplay focuses on real-time strategy and shooting mechanics.
-- An AI agent that can compete against a human player
+- An **AI agent** that can compete against a human player
 - Player controls a tank using a keyboard (WASD) and mouse for aiming/shooting
+- Press 'E' to place a landmine, which is able to cause damage to tanks(including player themself) and destroy soft walls
+- Bullets can bounce off the walls, enabling player to come up with technical and trick shots
+- Player can choose from default or randomly generated map
+- Coins will be randomly generated across the map,  
+  player can press 'O' to open store interface and spend coins to purchase utilities
+  - $3 per utility
+  - Utilities includes: increase moving speed, increase fire rate, and heal the tank
 - Bullets can bounce off the walls, enabling player to come up with technical and trick shots
 - Player can choose from default or randomly generated map
 - The game ends when either the player's or the AI tank is destroyed
@@ -40,4 +47,4 @@ The gameplay focuses on real-time strategy and shooting mechanics.
   - Game over dialog
   - Audio (BGM, win/lose music, and SFX)
 - **112062234 謝承軒** (30%)
-  - map generation, tank motivation, collision detection, history recording, stage selection
+  - map generation, tank motivation, collision detection, history recording, stage selection, health bar
