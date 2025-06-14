@@ -4,3 +4,5 @@ build
 allegro_monolith-5.2.dll
 log.txt
 .DS_Store
+logs
+.cache
