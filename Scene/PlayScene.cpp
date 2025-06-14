@@ -92,16 +92,17 @@ void PlayScene::Initialize() {
 
     // Item Button 1
     itemButton1 = new Engine::ImageButton(
-        "play/target-invalid.png",
-        "play/target-invalid.png", // Hover image (can be changed later)
+        "play/speed.png",
+        "play/speedOn.png", // Hover image (can be changed later)
         startX, buttonY,
         buttonWidth, buttonHeight
     );
     itemButton1->SetOnClickCallback([this]() {
         // Item 1: Increase Tank Speed
         if (playerTank) {
-            if (playerCoinCount<3) return;
+            if (!showItemButtons || playerCoinCount<3) return;
             playerCoinCount-=3;
+            AudioHelper::PlayAudio("cashReg.wav");
             playerTank->IncreaseSpeed();
         }
     });
@@ -109,15 +110,16 @@ void PlayScene::Initialize() {
 
     // Item Button 2
     itemButton2 = new Engine::ImageButton(
-        "play/target-invalid.png",
-        "play/target-invalid.png", // Hover image
+        "play/attack.png",
+        "play/attackOn.png", // Hover image
         startX + buttonWidth + buttonSpacing, buttonY,
         buttonWidth, buttonHeight
     );
     itemButton2->SetOnClickCallback([this]() {
         // Item 2: Increase Fire Rate
-        if (playerCoinCount<3) return;
+        if (!showItemButtons || playerCoinCount<3) return;
         playerCoinCount-=3;
+        AudioHelper::PlayAudio("cashReg.wav");
         if (playerTank) {
             playerTank->IncreaseFireRate();
         }
@@ -126,16 +128,17 @@ void PlayScene::Initialize() {
 
     // Item Button 3
     itemButton3 = new Engine::ImageButton(
-        "play/target-invalid.png",
-        "play/target-invalid.png", // Hover image
+        "play/heart.png",
+        "play/heartOn.png",
         startX + (buttonWidth + buttonSpacing) * 2, buttonY,
         buttonWidth, buttonHeight
     );
     itemButton3->SetOnClickCallback([this]() {
         // Item 3: Heal Tank
         if (playerTank) {
-            if (playerCoinCount<3) return;
+            if (!showItemButtons || playerCoinCount<3) return;
             playerCoinCount-=3;
+            AudioHelper::PlayAudio("cashReg.wav");
             playerTank->Heal(2); // Heal by 2 life points
         }
     });
@@ -369,8 +372,8 @@ void PlayScene::Update(float deltaTime) {
 void PlayScene::Draw() const {
     IScene::Draw();
     // Draw Coin Count
-    std::string coinText = "Coins: " + std::to_string(playerCoinCount);
-    Engine::Label coinLabel(coinText, "PixelatedElegance.ttf", 30, 10, 10, 255, 255, 0, 255, 0, 0);
+    std::string coinText = "Coins: $" + std::to_string(playerCoinCount);
+    Engine::Label coinLabel(coinText, "PixelatedElegance.ttf", 30, 10, 10, 0, 0, 0, 255, 0, 0);
     coinLabel.Draw();
 
     if(isGameOver){
@@ -381,31 +384,33 @@ void PlayScene::Draw() const {
         backButton->Draw();
         backButtonLabel->Draw();
     }
-    if (isPaused) {
-        // Draw semi-transparent overlay
-        auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
-        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(0, 0, 0, 150)); // Semi-transparent black
-        // Draw PAUSED text
-        if (pauseText) {
-            pauseText->Draw();
+    else{
+        if (isPaused) {
+            // Draw semi-transparent overlay
+            auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
+            al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(0, 0, 0, 150)); // Semi-transparent black
+            // Draw PAUSED text
+            if (pauseText) {
+                pauseText->Draw();
+            }
         }
-    }
-    else if (playerTank) {
-        Engine::Point tankPos = playerTank->Position;
-        Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
-        const float dotSpacing = 20.0f;
-        const float dotRadius = 4.0f;
-        ALLEGRO_COLOR color = al_map_rgba(100, 100, 100, 150);    // color of the line
+        else if (playerTank) {
+            Engine::Point tankPos = playerTank->Position;
+            Engine::Point mouse = Engine::GameEngine::GetInstance().GetMousePosition();
+            const float dotSpacing = 20.0f;
+            const float dotRadius = 4.0f;
+            ALLEGRO_COLOR color = al_map_rgba(100, 100, 100, 150);    // color of the line
 
-        float dx = mouse.x - tankPos.x;
-        float dy = mouse.y - tankPos.y;
-        float dist = sqrt(dx * dx + dy * dy);
-        float steps = dist / dotSpacing;
-        for(int i = 0; i < steps; ++i){
-            float t = i / steps;
-            float x = tankPos.x + dx * t;
-            float y = tankPos.y + dy * t;
-            al_draw_filled_circle(x, y, dotRadius, color);
+            float dx = mouse.x - tankPos.x;
+            float dy = mouse.y - tankPos.y;
+            float dist = sqrt(dx * dx + dy * dy);
+            float steps = dist / dotSpacing;
+            for(int i = 0; i < steps; ++i){
+                float t = i / steps;
+                float x = tankPos.x + dx * t;
+                float y = tankPos.y + dy * t;
+                al_draw_filled_circle(x, y, dotRadius, color);
+            }
         }
     }
 }
