@@ -9,6 +9,7 @@
 The gameplay focuses on real-time strategy and shooting mechanics.
 - An **AI agent** that can compete against a human player
 - Player controls a tank using a keyboard (WASD) and mouse for aiming/shooting
+- Press spacebar to dash for a short distance
 - Press 'E' to place a landmine, which is able to cause damage to tanks(including player themself) and destroy soft walls
 - **Bullets can bounce off the walls**, enabling player to come up with technical and trick shots
 - Player can choose from default or **randomly generated map**
