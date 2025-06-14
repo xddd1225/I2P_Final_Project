@@ -51,6 +51,8 @@ add_executable(Final_Project
     Object/Explosion.hpp
     Object/LandMine.cpp
     Object/LandMine.hpp
+    Object/Coin.cpp
+    Object/Coin.hpp
     
     Scene/PlayScene.cpp
     Scene/PlayScene.hpp

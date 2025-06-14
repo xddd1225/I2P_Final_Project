@@ -20,6 +20,7 @@
 
 #include "Object/Tank.hpp"
 #include "Object/Explosion.hpp"
+#include "Object/Coin.hpp"
 
 void PlayScene::Initialize() {
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -45,12 +46,16 @@ void PlayScene::Initialize() {
     TankGroup = new Group();
     BulletGroup = new Group();
     GroundEffectGroup = new Group();
+    CoinGroup = new Group();
 
     AddNewObject(GroundGroup);
     AddNewObject(WallGroup);
     AddNewObject(TankGroup);
     AddNewObject(BulletGroup);
     AddNewObject(GroundEffectGroup);
+    AddNewObject(CoinGroup);
+
+    playerCoinCount = 0;
 
     for (int y = 0; y < MapHeight; ++y) {
         for (int x = 0; x < MapWidth; ++x) {
@@ -70,6 +75,86 @@ void PlayScene::Initialize() {
     TankGroup->AddNewObject(playerTank);
     TankGroup->AddNewObject(aiTank);
     bgmId = AudioHelper::PlayBGM("ingamebgm.ogg");
+
+    // Initialize coin spawn timer with a random offset
+    coinSpawnTimer = static_cast<float>(rand()) / RAND_MAX * coinSpawnCooldown;
+
+    // Item buttons
+    int halfW = Engine::GameEngine::GetInstance().GetScreenSize().x / 2;
+    int screenH = Engine::GameEngine::GetInstance().GetScreenSize().y;
+    int halfH = Engine::GameEngine::GetInstance().GetScreenSize().y / 2;
+    int buttonWidth = 80;
+    int buttonHeight = 80;
+    int buttonSpacing = 20;
+    int totalButtonsWidth = (buttonWidth * 3) + (buttonSpacing * 2);
+    int startX = halfW - (totalButtonsWidth / 2);
+    int buttonY = screenH - buttonHeight - 20; // 20 pixels from bottom
+
+    // Item Button 1
+    itemButton1 = new Engine::ImageButton(
+        "play/target-invalid.png",
+        "play/target-invalid.png", // Hover image (can be changed later)
+        startX, buttonY,
+        buttonWidth, buttonHeight
+    );
+    itemButton1->SetOnClickCallback([this]() {
+        // Item 1: Increase Tank Speed
+        if (playerTank) {
+            if (playerCoinCount<3) return;
+            playerCoinCount-=3;
+            playerTank->IncreaseSpeed();
+        }
+    });
+    AddNewControlObject(itemButton1);
+
+    // Item Button 2
+    itemButton2 = new Engine::ImageButton(
+        "play/target-invalid.png",
+        "play/target-invalid.png", // Hover image
+        startX + buttonWidth + buttonSpacing, buttonY,
+        buttonWidth, buttonHeight
+    );
+    itemButton2->SetOnClickCallback([this]() {
+        // Item 2: Increase Fire Rate
+        if (playerCoinCount<3) return;
+        playerCoinCount-=3;
+        if (playerTank) {
+            playerTank->IncreaseFireRate();
+        }
+    });
+    AddNewControlObject(itemButton2);
+
+    // Item Button 3
+    itemButton3 = new Engine::ImageButton(
+        "play/target-invalid.png",
+        "play/target-invalid.png", // Hover image
+        startX + (buttonWidth + buttonSpacing) * 2, buttonY,
+        buttonWidth, buttonHeight
+    );
+    itemButton3->SetOnClickCallback([this]() {
+        // Item 3: Heal Tank
+        if (playerTank) {
+            if (playerCoinCount<3) return;
+            playerCoinCount-=3;
+            playerTank->Heal(2); // Heal by 2 life points
+        }
+    });
+    AddNewControlObject(itemButton3);
+
+    // Pause Text
+    pauseText = new Engine::Label(
+        "PAUSED",
+        "PixelatedElegance.ttf",
+        60,
+        halfW, halfH,
+        255, 255, 255, 255, 0.5, 0.5
+    );
+    // Do not AddNewObject(pauseText) here, it will be drawn manually in Draw() when paused.
+
+    // Initially hide item buttons
+    itemButton1->Visible = false;
+    itemButton2->Visible = false;
+    itemButton3->Visible = false;
 }
 
 void PlayScene::LoadFixedMap() {
@@ -94,6 +179,26 @@ void PlayScene::LoadFixedMap() {
     for (int x = 8; x < 17; ++x) {
         mapState[6][x] = TILE_WALL;
     }
+
+    // Delete item buttons (simplified due to API limitations)
+    if (itemButton1) {
+        delete itemButton1;
+        itemButton1 = nullptr;
+    }
+    if (itemButton2) {
+        delete itemButton2;
+        itemButton2 = nullptr;
+    }
+    if (itemButton3) {
+        delete itemButton3;
+        itemButton3 = nullptr;
+    }
+
+    if (pauseText) {
+        delete pauseText;
+        pauseText = nullptr;
+    }
+    IScene::Terminate();
 }
 
 
@@ -198,8 +303,9 @@ void PlayScene::UpdateTileImage(int x, int y) {
                 WallGroup->AddNewObject(new Engine::Image("play/box.png", x * BlockSize, y * BlockSize));
             } else if (mapState[y][x] == TILE_BREAK_WALL) {
                 WallGroup->AddNewObject(new Engine::Image("play/straw.png", x * BlockSize, y * BlockSize));
-            } else {
+            } else if (mapState[y][x] == TILE_FLOOR){
                 GroundGroup->AddNewObject(new Engine::Image("play/oak.png", x * BlockSize, y * BlockSize));
+                // GroundGroup->AddNewObject(new Engine::Image("play/light-2.png", x * BlockSize, y * BlockSize));
             }
         }
     }
@@ -207,10 +313,23 @@ void PlayScene::UpdateTileImage(int x, int y) {
 
 void PlayScene::Terminate() {
     AudioHelper::StopBGM(bgmId);
-    IScene::Terminate();
+    // Delete item buttons (managed by Group, but manually setting to nullptr to be safe)
+    if (itemButton1) { itemButton1 = nullptr; }
+    if (itemButton2) { itemButton2 = nullptr; }
+    if (itemButton3) { itemButton3 = nullptr; }
+
+    if (pauseText) {
+        delete pauseText;
+        pauseText = nullptr;
+    }
+    IScene::Terminate(); // This will clear all groups and delete objects added with AddNewObject
 }
 
 void PlayScene::Update(float deltaTime) {
+    if (isPaused) {
+        // Optional: Update pause menu items if any, then return.
+        return;
+    }
     if(isGameOver){
         for(auto &obj : TankGroup->GetObjects()){
             if(dynamic_cast<Explosion*>(obj)){
@@ -221,10 +340,39 @@ void PlayScene::Update(float deltaTime) {
     }
     if(aiTank) aiTank->Strategy();
     IScene::Update(deltaTime);
+
+    // Coin spawning logic
+    coinSpawnTimer -= deltaTime;
+    if (coinSpawnTimer <= 0) {
+        // Generate random position for the coin
+        int coinX, coinY;
+        bool validPositionFound = false;
+        for (int i = 0; i < 100; ++i) { // Try up to 100 times to find a valid spot
+            coinX = rand() % MapWidth;
+            coinY = rand() % MapHeight;
+            if (mapState[coinY][coinX] == TILE_FLOOR) {
+                validPositionFound = true;
+                break;
+            }
+        }
+
+        if (validPositionFound) {
+            // Add coin to the CoinGroup
+            CoinGroup->AddNewObject(new Coin(coinX * BlockSize + BlockSize / 4, coinY * BlockSize + BlockSize / 4, BlockSize / 2, BlockSize / 2));
+            Engine::LOG(Engine::INFO) << "Coin spawned at: (" << coinX << ", " << coinY << ")";
+        }
+        // Reset timer, adding some randomness
+        coinSpawnTimer = coinSpawnCooldown + (static_cast<float>(rand()) / RAND_MAX * coinSpawnCooldown * 0.5f - coinSpawnCooldown * 0.25f);
+    }
 }
 
 void PlayScene::Draw() const {
     IScene::Draw();
+    // Draw Coin Count
+    std::string coinText = "Coins: " + std::to_string(playerCoinCount);
+    Engine::Label coinLabel(coinText, "PixelatedElegance.ttf", 30, 10, 10, 255, 255, 0, 255, 0, 0);
+    coinLabel.Draw();
+
     if(isGameOver){
         auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
         // mask in game over dialog
@@ -232,6 +380,15 @@ void PlayScene::Draw() const {
         gameOverText->Draw();
         backButton->Draw();
         backButtonLabel->Draw();
+    }
+    if (isPaused) {
+        // Draw semi-transparent overlay
+        auto screenSize = Engine::GameEngine::GetInstance().GetScreenSize();
+        al_draw_filled_rectangle(0, 0, screenSize.x, screenSize.y, al_map_rgba(0, 0, 0, 150)); // Semi-transparent black
+        // Draw PAUSED text
+        if (pauseText) {
+            pauseText->Draw();
+        }
     }
     else if (playerTank) {
         Engine::Point tankPos = playerTank->Position;
@@ -255,6 +412,20 @@ void PlayScene::Draw() const {
 
 void PlayScene::OnKeyDown(int keyCode) {
     IScene::OnKeyDown(keyCode);
+    if (keyCode == ALLEGRO_KEY_P) {
+        isPaused = !isPaused;
+        if (isPaused) {
+            AudioHelper::StopBGM(bgmId);
+        } else {
+            bgmId = AudioHelper::PlayBGM("ingamebgm.ogg"); // Replay BGM from beginning
+        }
+    }
+    if (keyCode == ALLEGRO_KEY_O) {
+        showItemButtons = !showItemButtons;
+        itemButton1->Visible = showItemButtons;
+        itemButton2->Visible = showItemButtons;
+        itemButton3->Visible = showItemButtons;
+    }
     if (playerTank)
         playerTank->OnKeyDown(keyCode);
 }

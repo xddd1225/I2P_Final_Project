@@ -7,6 +7,7 @@
 #include "Bullet.hpp"
 #include "Explosion.hpp"
 #include "Engine/AudioHelper.hpp"
+#include "Engine/LOG.hpp"
 
 PlayScene *Tank::getPlayScene() {
     return dynamic_cast<PlayScene *>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -256,6 +257,21 @@ void Tank::hurt(int damage) {
         scene->playerTank = nullptr;    // prevent crash (e.g., move tank after game over)
         scene->showGameOverDialog("You Lose!");
     }
+}
+
+void Tank::IncreaseSpeed() {
+    Speed *= 1.3f;
+    Engine::LOG(Engine::INFO) << "Tank speed increased to: " << Speed;
+}
+
+void Tank::IncreaseFireRate() {
+    SHOOT_COOLDOWN_TIME /= 1.5f;
+    Engine::LOG(Engine::INFO) << "Tank fire rate increased. Cooldown: " << SHOOT_COOLDOWN_TIME;
+}
+
+void Tank::Heal(int amount) {
+    life = std::min(maxlife, life + amount);
+    Engine::LOG(Engine::INFO) << "Tank healed. Current life: " << life;
 }
 
 void Tank::Shoot(float targetX, float targetY) {
