@@ -34,10 +34,10 @@ The gameplay focuses on real-time strategy and shooting mechanics.
 
 - **110021121 陶威綸** (40%)
   - 子彈、地雷邏輯、商店、金幣、AI坦克、玩家移動優化
-- **112062171 胡佳希** (35%)
+- **112062171 胡佳希** (30%)
   - UI, Game assets (buttons, map tiles, tank models, background images, font, game icon)
   - In-game mechanisms: tank barrel movement, player mouse aiming line, tank explosion animation
   - Game over dialog
   - Audio (BGM, win/lose music, and SFX)
-- **... 謝承軒** (x%)
-  - ...
+- **112062234 謝承軒** (30%)
+  - map generation, tank motivation, collision detection, history recording, stage selection
