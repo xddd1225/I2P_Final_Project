@@ -4,11 +4,16 @@
 > 組員：陶威綸、胡佳希、謝承軒
 
 ## Features
+
 - [Easy]
-  - 隨機生成金幣以、商店購買道具
-  - 遊戲暫停按鍵
-  - Player移動邏輯（還啟動、撞牆改變方向等）
+  - 隨機生成金幣、商店購買道具
+  - 遊戲暫停
+  - Player移動邏輯（啟動、撞牆改變方向等）
   - 地雷引爆
+  - 可破壞性地圖元素
+  - 血量顯示
+  - 坦克炮管跟隨滑鼠方向
+  - 顯示玩家瞄準輔助線
 - [Hard]
   - 隨機生成地圖
   - 蒙地卡羅演算法AI
@@ -30,7 +35,7 @@ The gameplay focuses on real-time strategy and shooting mechanics.
 - **... 陶威綸** (40%)
   - 子彈、地雷邏輯、商店、金幣、AI坦克、玩家移動優化
 - **112062171 胡佳希** (x%)
-  - Game assets (buttons, map tiles, tank models, background images, font, game icon)
+  - UI, Game assets (buttons, map tiles, tank models, background images, font, game icon)
   - In-game mechanisms: tank barrel movement, player mouse aiming line, tank explosion animation
   - Game over dialog
   - Audio (BGM, win/lose music, and SFX)
